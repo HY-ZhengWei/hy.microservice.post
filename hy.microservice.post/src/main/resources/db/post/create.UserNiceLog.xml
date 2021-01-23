@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sqlGroup"        class="org.hy.common.xml.plugins.XSQLGroup" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <!-- 美好回忆的图片创建（自动创建）的相关SQL -->
+    <sqls>
+    
+        <sql id="XSQL_Create_UserNiceLog">
+        
+            <dataSourceGroup ref="DSG_HMS" />
+            
+            <content>
+                <![CDATA[
+                CREATE TABLE UserNiceLog
+                (
+                 userID        VARCHAR(64)     NOT NULL          COMMENT '用户编号'
+                ,niceID        VARCHAR(64)     NOT NULL          COMMENT '点赞对象的编号'
+                ,niceType      VARCHAR(64)     NOT NULL          COMMENT '点赞对象的类型'
+                ,createTime    DATETIME        NOT NULL          COMMENT '创建时间'
+                );/
+
+                ALTER TABLE UserNiceLog ADD CONSTRAINT PK_UserNiceLog PRIMARY KEY (userID ,niceID ,niceType);/
+                
+                Alter TABLE UserNiceLog COMMENT                               = '用户点赞日志';/
+                ]]>
+            </content>
+            
+            <comment>用户点赞日志</comment>
+            <create>UserNiceLog</create>
+            
+        </sql>
+        
+    </sqls>
+    
+</config>

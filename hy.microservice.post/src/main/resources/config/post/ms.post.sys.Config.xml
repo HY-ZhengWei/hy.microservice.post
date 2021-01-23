@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="xconfig"         class="java.util.ArrayList" />
+    <import name="xparam"          class="java.util.Hashtable" />
+    <import name="item"            class="org.hy.common.app.Param" />
+    
+    
+    
+    <!-- 系统配置参数信息 -->
+    <xconfig>
+
+        <xparam id="SYSParam_MS_Post" key="name">
+            
+            <item id="IsInitDSG_MS_Post">
+                <name>IsInitDSG_MS_Post</name>
+                <value>启用</value>
+                <comment>是否初始化数据库连接池组。如果不在内部初始化，请在外部预先初始化好</comment>
+            </item>
+            
+            
+            <item id="MS_Post_RootPackageName">
+                <name>MS_Post_RootPackageName</name>
+                <value>org.hy.microservice.post</value>
+                <comment>顶级包的路径。用于初始化。一般不修改</comment>
+            </item>
+            
+        </xparam>
+        
+    </xconfig>
+    
+</config>

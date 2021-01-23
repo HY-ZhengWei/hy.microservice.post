@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sqlGroup"        class="org.hy.common.xml.plugins.XSQLGroup" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <!-- 用户的收藏信息的创建（自动创建）的相关SQL -->
+    <sqls>
+    
+        <sql id="XSQL_Create_UserFavoritesLog">
+        
+            <dataSourceGroup ref="DSG_MWC" />
+            
+            <content>
+                <![CDATA[
+                CREATE TABLE UserFavoritesLog
+                (
+                 userID          VARCHAR(64)     NOT NULL          COMMENT '用户编号'
+                ,favoritesID     VARCHAR(64)     NOT NULL          COMMENT '收藏编号'
+                ,serviceType     VARCHAR(64)     NOT NULL          COMMENT '业务类型（值内容由业务决定）'
+                ,createTime      DATETIME        NOT NULL          COMMENT '创建时间'
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;/
+
+                ALTER TABLE UserFavoritesLog ADD CONSTRAINT PK_UserFavoritesLog PRIMARY KEY (userID ,favoritesID ,serviceType);/
+                
+                Alter TABLE UserFavoritesLog COMMENT                           = '用户的收藏信息';/
+                ]]>
+            </content>
+            
+            <comment>用户的收藏信息</comment>
+            <create>UserFavoritesLog</create>
+            
+        </sql>
+        
+    </sqls>
+    
+</config>

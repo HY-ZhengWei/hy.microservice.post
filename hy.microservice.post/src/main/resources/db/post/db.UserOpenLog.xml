@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sqlGroup"        class="org.hy.common.xml.plugins.XSQLGroup" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <sqls>
+    
+        <sql id="XSQL_UserOpenLog_Insert"> 
+        
+            <dataSourceGroup ref="DSG_MWC" />
+            
+            <content>
+                <![CDATA[
+                INSERT  INTO UserOpenLog
+                       (
+                        userID    
+                       ,openID  
+                       ,serviceType 
+                       ,createTime
+                       )
+                VALUES (
+                        ':userID'
+                       ,':openID'
+                       ,':serviceType'
+                       ,NOW()
+                       )
+                ]]>
+            </content>
+            
+        </sql>
+        
+    </sqls>
+    
+</config>

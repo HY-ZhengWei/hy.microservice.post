@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sqlGroup"        class="org.hy.common.xml.plugins.XSQLGroup" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <sqls>
+    
+        <sql id="XSQL_UserFavoritesLog_Insert"> 
+        
+            <dataSourceGroup ref="DSG_MWC" />
+            
+            <content>
+                <![CDATA[
+                INSERT  INTO UserFavoritesLog
+                       (
+                        userID    
+                       ,favoritesID  
+                       ,serviceType 
+                       ,createTime
+                       )
+                VALUES (
+                        ':userID'
+                       ,':favoritesID'
+                       ,':serviceType'
+                       ,NOW()
+                       )
+                ]]>
+            </content>
+            
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserFavoritesLog_Del"> 
+        
+            <dataSourceGroup ref="DSG_MWC" />
+            
+            <content>
+                <![CDATA[
+                DELETE  FROM UserFavoritesLog
+                 WHERE  userID      = ':userID'
+                   AND  favoritesID = ':favoritesID'
+                   AND  serviceType = ':serviceType'
+                ]]>
+            </content>
+            
+        </sql>
+
+
+
+        <sql id="XSQL_UserFavoritesLog_queryList">
+
+            <dataSourceGroup ref="DSG_MWC" />
+
+            <content>
+                <![CDATA[
+                select
+                        A.id
+                       ,B.createTime
+                       ,A.serviceType
+                       ,A.deviceNo
+                       ,A.deviceType
+                       ,A.userID
+                       ,A.userName
+                       ,A.userIcon
+                       ,A.userType
+                       ,A.postTypeID
+                       ,A.postTypeName
+                       ,A.title
+                       ,A.coverUrl
+                       ,A.content
+                FROM UserFavoritesLog B
+                INNER JOIN PostInfo  A ON B.userID = A.userID
+                WHERE  B.favoritesID = A.id and B.userID   = ':userID'
+                ]]>
+            </content>
+            <result>
+                <row>com.aiyunwork.mwc.post.PostInfo</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+        </sql>
+    </sqls>
+    
+</config>

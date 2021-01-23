@@ -1,4 +1,4 @@
-package org.hy.microservice.file;
+package org.hy.microservice.post;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

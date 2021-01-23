@@ -13,7 +13,7 @@
     
         <sql id="XSQL_Create_UserOpenLog">
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[

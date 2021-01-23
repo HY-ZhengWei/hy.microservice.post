@@ -13,7 +13,7 @@
     
         <sql id="XSQL_Create_UserNiceLog">
         
-            <dataSourceGroup ref="DSG_HMS" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[

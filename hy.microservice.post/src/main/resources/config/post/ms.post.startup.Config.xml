@@ -11,15 +11,15 @@
     <!-- 启动加载XML配置信息的列表 -->
     <xconfig>
         
-        <startupConfig id="StartupConfig_MS_File">
+        <startupConfig id="StartupConfig_MS_Post">
         
-            <item if="IsInitDSG_MS_File.getValue == 启用">
-                <value>config/file/ms.file.sys.DB.Config.xml</value>
+            <item if="IsInitDSG_MS_Post.getValue == 启用">
+                <value>config/post/ms.post.sys.DB.Config.xml</value>
             </item>
 
             <!-- 加载数据库目录所有配置文件 -->
             <item>
-                <value>db/file</value>
+                <value>db/post</value>
             </item>
             
         </startupConfig>

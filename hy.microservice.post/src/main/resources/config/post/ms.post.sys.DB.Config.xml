@@ -11,11 +11,11 @@
     <!-- 数据库配置信息 -->
     <sqls>
 
-        <dataSource id="DS_MS_File" >
+        <dataSource id="DS_MS_Post" >
             <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
-            <url><![CDATA[jdbc:mysql://8.129.161.202:3306/manwucai?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8]]></url>
-            <username encrypt="org.hy.common.StringHelp">encrypt:cvq92AMvp8U=</username>
-            <password encrypt="org.hy.common.StringHelp">encrypt:viJgkVKeAtbbF7pwfxE/pg==</password>
+            <url><![CDATA[jdbc:mysql://139.199.111.241:3306/hms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8]]></url>
+            <username encrypt="org.hy.common.StringHelp">root</username>
+            <password encrypt="org.hy.common.StringHelp">DADEyuntu2019</password>
             <filters>stat,wall,log4j2</filters>
             <initialSize>5</initialSize>
             <minIdle>5</minIdle>
@@ -33,9 +33,9 @@
 
 
         <!-- 数据库连接池组 -->
-        <dataSourceGroup id="DSG_MS_File">
+        <dataSourceGroup id="DSG_MS_Post">
             <call name="add">
-                <dataSource ref="DS_MS_File" />
+                <dataSource ref="DS_MS_Post" />
             </call>
         </dataSourceGroup>
 

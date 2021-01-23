@@ -12,7 +12,7 @@
     
         <sql id="XSQL_PostInfo_Insert"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -82,7 +82,7 @@
         
         <sql id="XSQL_PostInfo_Query"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -164,7 +164,7 @@
         
         <sql id="XSQL_PostInfo_Query_Count"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -190,7 +190,7 @@
         
         <sql id="XSQL_PostInfo_Update_GoodCount_Add"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -206,7 +206,7 @@
         
         <sql id="XSQL_PostInfo_Update_GoodCount_Subtract"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -222,7 +222,7 @@
         
         <sql id="XSQL_PostInfo_Update_FavoritesCount_Add"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -238,7 +238,7 @@
         
         <sql id="XSQL_PostInfo_Update_FavoritesCount_Subtract"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -254,7 +254,7 @@
         
         <sql id="XSQL_PostInfo_Update_MessageCount_Add"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -270,7 +270,7 @@
         
         <sql id="XSQL_PostInfo_Update_OpenCount_Add"> 
         
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -286,7 +286,7 @@
         
         <sql id="XSQL_PostInfo_Update_PostByID">
 
-            <dataSourceGroup ref="DSG_MWC" />
+            <dataSourceGroup ref="DSG_MS_Post" />
 
             <content>
                 <![CDATA[

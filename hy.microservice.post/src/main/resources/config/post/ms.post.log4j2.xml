@@ -13,7 +13,7 @@
 
     <loggers>
         <logger name="org.hy.common"            level="debug" />
-        <logger name="org.hy.microservice.file" level="debug" />
+        <logger name="org.hy.microservice.post" level="debug" />
         <root level="info">
             <appenderref ref="CONSOLE"/>
         </root>

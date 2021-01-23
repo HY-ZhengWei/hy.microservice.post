@@ -12,7 +12,7 @@
     
         <sql id="XSQL_PingShan_UserNiceLog_Insert"> 
         
-            <dataSourceGroup ref="DSG_HMS" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[
@@ -38,7 +38,7 @@
         
         <sql id="XSQL_PingShan_UserNiceLog_Del"> 
         
-            <dataSourceGroup ref="DSG_HMS" />
+            <dataSourceGroup ref="DSG_MS_Post" />
             
             <content>
                 <![CDATA[

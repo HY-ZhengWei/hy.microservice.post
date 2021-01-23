@@ -80,7 +80,7 @@
                 ]]>
             </content>
             <result>
-                <row>com.aiyunwork.mwc.post.PostInfo</row>
+                <row>org.hy.microservice.post.PostInfo</row>
                 <cfill>setter(colValue)</cfill>
             </result>
         </sql>

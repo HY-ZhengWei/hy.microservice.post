@@ -40,7 +40,8 @@
                        ,goodCount 
                        ,isRecommend    
                        ,isShow        
-                       ,createTime    
+                       ,createTime
+                       ,updateTime    
                        ,auditState    
                        ,auditResult   
                        ,auditTime     
@@ -68,6 +69,7 @@
                        ,':goodCount'
                        ,':isRecommend'
                        ,':isShow'
+                       ,NOW()
                        ,NOW()
                        ,':auditState'
                        ,':auditResult'
@@ -122,21 +124,22 @@
                        ,A.goodCount  
                        ,(
                          SELECT  COUNT(1)
-                           FROM  tbl_base_userNiceLog  SA
+                           FROM  UserNiceLog  SA
                           WHERE  SA.userID   = ':userID'
                             AND  SA.niceID   = A.id
                             AND  SA.niceType = A.serviceType
                         )    AS  myIsNice
                         ,(
-                           SELECT  COUNT(1)
-                               FROM  tbl_base_comment  SA
-                           WHERE  SA.open_id    = ':userID'
-                             AND  SA.post_id    = A.id
-                             AND  SA.class_type = A.serviceType
+                          SELECT  COUNT(1)
+                            FROM  UserComment  SA
+                           WHERE  SA.userID      = ':userID'
+                             AND  SA.postID      = A.id
+                             AND  SA.serviceType = A.serviceType
                        )  AS  myIsComment
                        ,A.isRecommend        
                        ,A.isShow        
                        ,A.createTime    
+                       ,A.updateTime    
                        ,A.auditState    
                        ,A.auditResult   
                        ,A.auditTime  
@@ -146,7 +149,7 @@
                 <[ AND  A.id          = ':id'           ]>
                 <[ AND  A.userID      = ':userID'       ]>
                 <[ AND  A.postTypeID  = ':postTypeID'   ]>
-                   AND  A.serviceType = ':serviceType'
+                <[ AND  A.serviceType = ':serviceType'  ]>
                  ORDER  BY A.createTime DESC
                           ,A.goodCount  DESC
                  <[ LIMIT :startIndex, :pagePerCount    ]>
@@ -175,7 +178,7 @@
                 <[ AND  A.id          = ':id'           ]>
                 <[ AND  A.userID      = ':userID'       ]>
                 <[ AND  A.postTypeID  = ':postTypeID'   ]>
-                   AND  A.serviceType = ':serviceType'
+                <[ AND  A.serviceType = ':serviceType'  ]>
                 ]]>
             </content>
             

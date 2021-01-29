@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <sqls>
+    
+        <sql id="XSQL_UserComment_Save">
+
+            <dataSourceGroup ref="DSG_MS_Post"/>
+
+            <content>
+                <![CDATA[
+                INSERT  INTO UserComment 
+                      (
+                       id     
+                      ,parentID    
+                      ,postID     
+                      ,serviceType
+                      ,userID     
+                      ,userName   
+                      ,userIcon   
+                      ,userType   
+                      ,comment    
+                      ,score      
+                      ,goodCount
+                      ,isDel
+                      ,createTime
+                      ,updateTime 
+                      )
+               VALUES (
+                       ':id'
+                      ,':parentID'
+                      ,':postID'
+                      ,':serviceType'
+                      ,':userID'
+                      ,':userName'
+                      ,':userIcon'
+                      ,':userType'
+                      ,':comment'
+                      ,':score'
+                      ,':goodCount'
+                      ,0
+                      ,Now()
+                      ,Now()
+                      )
+                ]]>
+            </content>
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserComment_Delete">
+
+            <dataSourceGroup ref="DSG_MS_Post"/>
+            <content>
+                <![CDATA[
+                UPDATE  UserComment
+                   SET  isDel      = 1
+                       ,updateTime = Now()
+                 WHERE  id         = ':id'
+                ]]>
+            </content>
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserComment_Update_GoodCount_Add">
+
+            <dataSourceGroup ref="DSG_MS_Post" />
+
+            <content>
+                <![CDATA[
+                UPDATE  UserComment
+                   SET  goodCount  = goodCount + 1
+                       ,updateTime = Now()
+                 WHERE  id         = ':id'
+                ]]>
+            </content>
+
+        </sql>
+
+
+
+        <sql id="XSQL_UserComment_Update_GoodCount_Subtract">
+
+            <dataSourceGroup ref="DSG_MS_Post" />
+
+            <content>
+                <![CDATA[
+                UPDATE  UserComment
+                   SET  goodCount  = goodCount - 1
+                       ,updateTime = Now()
+                 WHERE  id         = ':id'
+                ]]>
+            </content>
+
+        </sql>
+        
+        
+
+        <sql id="XSQL_UserComment_Query">
+
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  id   
+                       ,parentID      
+                       ,postID     
+                       ,serviceType
+                       ,userID     
+                       ,userName   
+                       ,userIcon   
+                       ,userType   
+                       ,comment    
+                       ,score      
+                       ,goodCount 
+                       ,isDel
+                       ,createTime
+                       ,updateTime 
+                  FROM  UserComment
+                 WHERE  isDel       = 0
+              <[   AND  parentID    = ':parentID'    ]>
+              <[   AND  userID      = ':userID'      ]>
+              <[   AND  post_id     = ':postID'      ]>
+              <[   AND  serviceType = ':serviceType' ]>
+                ORDER BY createTime DESC
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.userComment.UserComment</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+
+        </sql>
+
+
+
+        <sql id="XSQL_UserComment_Query_AllReply">
+
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  id   
+                       ,parentID      
+                       ,postID     
+                       ,serviceType
+                       ,userID     
+                       ,userName   
+                       ,userIcon   
+                       ,userType   
+                       ,comment    
+                       ,score      
+                       ,goodCount  
+                       ,isDel
+                       ,createTime
+                       ,updateTime 
+                  FROM  UserComment
+                 WHERE  isDel       = 0
+              <[   AND  parentID    = ':parentID'    ]>
+              <[   AND  userID      = ':userID'      ]>
+              <[   AND  post_id     = ':postID'      ]>
+              <[   AND  serviceType = ':serviceType' ]>
+                ORDER BY createTime DESC
+                ]]>
+            </content>
+            
+            <result>
+                <table>org.hy.common.TreeObject</table>
+                <fill>put(row)</fill>
+                <row>org.hy.microservice.post.userComment.UserComment</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+
+        </sql>
+
+    </sqls>
+
+</config>

@@ -33,6 +33,7 @@ public class BaseResponse<D> extends SerializableDef
     private BaseResponseData<D> data;
     
     
+    
     public BaseResponse()
     {
         this.code    = $Succeed;

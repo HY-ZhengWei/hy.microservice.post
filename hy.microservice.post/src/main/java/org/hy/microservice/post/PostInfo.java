@@ -17,8 +17,6 @@ public class PostInfo extends BaseViewMode
 {
     
     private static final long serialVersionUID = -5018435706755947460L;
-    
-    
 
     /** 主键ID */
     private String  id;

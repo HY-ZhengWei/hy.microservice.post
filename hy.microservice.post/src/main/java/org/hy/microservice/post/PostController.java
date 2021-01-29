@@ -2,6 +2,7 @@ package org.hy.microservice.post;
 
 import java.util.List;
 
+import org.hy.common.Help;
 import org.hy.common.xml.log.Logger;
 import org.hy.microservice.post.common.BaseResponse;
 import org.hy.microservice.post.userFavorites.UserFavoritesLog;
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -63,17 +66,37 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="send" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="send" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> send(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> send(@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_Ret = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
+        {
+            return v_Ret.setCode("-1").setMessage("未收到任何参数");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getTitle()) ) 
+        {
+            return v_Ret.setCode("-2").setMessage("帖子标题为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getTitle()) ) 
+        {
+            return v_Ret.setCode("-3").setMessage("发帖人员编码为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getContent()) ) 
+        {
+            return v_Ret.setCode("-4").setMessage("发帖内容为空");
+        }
         
         boolean v_AddRet = this.postService.addPost(i_PostInfo);
         if ( v_AddRet )
         {
             $Logger.info("用户（" + i_PostInfo.getUserName() + i_PostInfo.getUserID() + "）发贴" + i_PostInfo.getTitle() + "，成功");
-            return v_Ret.setData(i_PostInfo);
+            return this.queryPosts(i_PostInfo);
         }
         else
         {
@@ -94,13 +117,15 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="posts" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="list" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> queryPosts(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> queryPosts(@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_Ret = new BaseResponse<PostInfo>();
         
         v_Ret.setData(this.postService.queryPosts(i_PostInfo));
+        v_Ret.getData().setRecordCount(this.postService.queryPostsCount(i_PostInfo));
+        v_Ret.getData().calcPage(i_PostInfo);
         
         return v_Ret;
     }
@@ -119,7 +144,7 @@ public class PostController
      */
     @RequestMapping(value="goodCountAdd" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> goodCountAdd(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> goodCountAdd(@RequestBody PostInfo i_PostInfo)
     {
         if ( this.postService.goodCountAdd(i_PostInfo) )
         {
@@ -152,7 +177,7 @@ public class PostController
      */
     @RequestMapping(value="goodCountSubtract" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> goodCountSubtract(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> goodCountSubtract(@RequestBody PostInfo i_PostInfo)
     {
         if ( this.postService.goodCountSubtract(i_PostInfo) )
         {
@@ -185,7 +210,7 @@ public class PostController
      */
     @RequestMapping(value="favoritesCountAdd" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> favoritesCountAdd(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> favoritesCountAdd(@RequestBody PostInfo i_PostInfo)
     {
         if ( this.postService.favoritesCountAdd(i_PostInfo) )
         {
@@ -218,7 +243,7 @@ public class PostController
      */
     @RequestMapping(value="favoritesCountSubtract" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> favoritesCountSubtract(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> favoritesCountSubtract(@RequestBody PostInfo i_PostInfo)
     {
         if ( this.postService.favoritesCountSubtract(i_PostInfo) )
         {
@@ -251,7 +276,7 @@ public class PostController
      */
     @RequestMapping(value="openCountAdd" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> openCountAdd(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> openCountAdd(@RequestBody PostInfo i_PostInfo)
     {
         if ( this.postService.openCountAdd(i_PostInfo) )
         {
@@ -281,7 +306,7 @@ public class PostController
      */
     @RequestMapping(value="postsCount" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> queryPostsCount(PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> queryPostsCount(@RequestBody PostInfo i_PostInfo)
     {
         List<PostInfo> v_Ret = this.postService.queryPosts(i_PostInfo);
 
@@ -321,7 +346,7 @@ public class PostController
      */
     @RequestMapping(value="favoritesPosts" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> queryFavoritesPosts(UserFavoritesLog i_UserFavoritesLog)
+    public BaseResponse<PostInfo> queryFavoritesPosts(@RequestBody UserFavoritesLog i_UserFavoritesLog)
     {
         List<PostInfo> v_Ret = null;
 
@@ -344,7 +369,7 @@ public class PostController
      */
     @RequestMapping(value="nicePosts" ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<PostInfo> queryNicePosts(UserNiceLog i_UserNiceLog)
+    public List<PostInfo> queryNicePosts(@RequestBody UserNiceLog i_UserNiceLog)
     {
         List<PostInfo> v_Ret = null;
 
@@ -352,4 +377,5 @@ public class PostController
 
         return v_Ret;
     }
+    
 }

@@ -33,6 +33,21 @@ public interface IPostInfoDAO
      */
     @Xsql("XSQL_PostInfo_Query")
     public List<PostInfo> queryPosts(PostInfo i_PostInfo);
+    
+    
+    
+    /**
+     * 获取可用于显示的所有帖子列表的总行数
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-01-29
+     * @version     v1.0
+     *
+     * @param i_PostInfo
+     * @return
+     */
+    @Xsql("XSQL_PostInfo_Query_Count")
+    public Long queryPostsCount(PostInfo i_PostInfo);
 
     
 

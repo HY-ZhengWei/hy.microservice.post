@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sqlGroup"        class="org.hy.common.xml.plugins.XSQLGroup" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <!-- 用户的评论信息的创建（自动创建）的相关SQL -->
+    <sqls>
+    
+        <sql id="XSQL_Create_UserComment">
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                CREATE TABLE UserComment
+                (
+                 id              VARCHAR(64)     NOT NULL          COMMENT '主键'
+                ,parentID        VARCHAR(64)     NOT NULL          COMMENT '父评论编号，评论的回复，针对用户评论的评论'
+                ,postID          VARCHAR(64)     NOT NULL          COMMENT '帖子编号'
+                ,serviceType     VARCHAR(64)     NOT NULL          COMMENT '业务类型（值内容由业务决定）'
+                ,userID          VARCHAR(64)     NOT NULL          COMMENT '用户编号'
+                ,userName        VARCHAR(128)                      COMMENT '用户名称'
+                ,userIcon        VARCHAR(500)                      COMMENT '用户头像路径'
+                ,userType        VARCHAR(64)                       COMMENT '用户类型'
+                ,comment         MEDIUMTEXT                        COMMENT '帖子内容'
+                ,score           INT                               COMMENT '评分'
+                ,goodCount       INT             NOT NULL          COMMENT '点赞次数'
+                ,isDel           INT             NOT NULL          COMMENT '删除标记'
+                ,createTime      DATETIME        NOT NULL          COMMENT '创建时间'
+                ,updateTime      DATETIME        NOT NULL          COMMENT '修改时间'
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;/
+
+                ALTER TABLE UserComment ADD CONSTRAINT PK_UserComment PRIMARY KEY (id);/
+                
+                Alter TABLE UserComment COMMENT                           = '用户的评论信息';/
+                ]]>
+            </content>
+            
+            <comment>用户的评论信息</comment>
+            <create>UserComment</create>
+            
+        </sql>
+        
+    </sqls>
+    
+</config>

@@ -40,7 +40,24 @@ public class PostInfoService
     {
         return this.postInfoDAO.queryPosts(i_PostInfo);
     }
-
+    
+    
+    
+    /**
+     * 获取可用于显示的所有帖子列表的总行数
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-01-29
+     * @version     v1.0
+     *
+     * @param i_PostInfo
+     * @return
+     */
+    public Long queryPostsCount(PostInfo i_PostInfo)
+    {
+        return this.postInfoDAO.queryPostsCount(i_PostInfo);
+    }
+    
     
     
     /**

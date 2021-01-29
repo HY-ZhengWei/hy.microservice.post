@@ -46,6 +46,9 @@ public class BaseViewMode extends SerializableDef
     /** 修改时间 */
     private Date    updateTime;
     
+    /** 删除标记。1删除；0未删除 */
+    private Integer isDel;
+    
     /** 是否显示。1显示；0不显示 */
     private Integer isShow;
     
@@ -58,14 +61,14 @@ public class BaseViewMode extends SerializableDef
     /** 审核时间 */
     private Date    auditTime;
     
-    /** 开始索引 */
-    private Integer startIndex;
+    /** 页码。有效下标从1开始 */
+    private Long    pageIndex;
 
     /** 每页显示数量 */
-    private Integer pagePerCount;
+    private Long    pagePerCount;
     
     /** 总行数 */
-    private Integer totalCount;
+    private Long    totalCount;
 
 
     
@@ -410,20 +413,35 @@ public class BaseViewMode extends SerializableDef
     /**
      * 获取：开始索引
      */
-    public Integer getStartIndex()
+    public Long getStartIndex()
     {
-        return startIndex;
+        if ( this.pageIndex == null || this.pagePerCount == null )
+        {
+            return null;
+        }
+        else
+        {
+            return this.getPagePerCount() * (this.getPageIndex() - 1);
+        }
     }
 
 
     /**
      * 获取：每页显示数量
      */
-    public Integer getPagePerCount()
+    public Long getPagePerCount()
     {
-        if ( this.pagePerCount != null && this.pagePerCount > 1000 )
+        if ( this.pagePerCount == null )
         {
-            return 1000;
+            return null;
+        }
+        else if ( this.pagePerCount > 1000L )
+        {
+            return 1000L;
+        }
+        else if ( this.pagePerCount <= 0L )
+        {
+            return 10L;
         }
         else
         {
@@ -433,22 +451,11 @@ public class BaseViewMode extends SerializableDef
 
     
     /**
-     * 设置：开始索引
-     * 
-     * @param startIndex 
-     */
-    public void setStartIndex(Integer startIndex)
-    {
-        this.startIndex = startIndex;
-    }
-
-    
-    /**
      * 设置：每页显示数量
      * 
      * @param pagePerCount 
      */
-    public void setPagePerCount(Integer pagePerCount)
+    public void setPagePerCount(Long pagePerCount)
     {
         this.pagePerCount = pagePerCount;
     }
@@ -457,7 +464,7 @@ public class BaseViewMode extends SerializableDef
     /**
      * 获取：总行数
      */
-    public Integer getTotalCount()
+    public Long getTotalCount()
     {
         return totalCount;
     }
@@ -468,7 +475,7 @@ public class BaseViewMode extends SerializableDef
      * 
      * @param totalCount 
      */
-    public void setTotalCount(Integer totalCount)
+    public void setTotalCount(Long totalCount)
     {
         this.totalCount = totalCount;
     }
@@ -491,6 +498,57 @@ public class BaseViewMode extends SerializableDef
     public void setUpdateTime(Date updateTime)
     {
         this.updateTime = updateTime;
+    }
+
+    
+    /**
+     * 获取：删除标记。1删除；0未删除
+     */
+    public Integer getIsDel()
+    {
+        return isDel;
+    }
+
+    
+    /**
+     * 设置：删除标记。1删除；0未删除
+     * 
+     * @param isDel 
+     */
+    public void setIsDel(Integer isDel)
+    {
+        this.isDel = isDel;
+    }
+
+    
+    /**
+     * 获取：页码。有效下标从1开始
+     */
+    public Long getPageIndex()
+    {
+        if ( this.pageIndex == null )
+        {
+            return null;
+        }
+        else if ( this.pageIndex <= 0 )
+        {
+            return 1L;
+        }
+        else
+        {
+            return pageIndex;
+        }
+    }
+
+    
+    /**
+     * 设置：页码。有效下标从1开始
+     * 
+     * @param pageIndex 
+     */
+    public void setPageIndex(Long pageIndex)
+    {
+        this.pageIndex = pageIndex;
     }
 
 }

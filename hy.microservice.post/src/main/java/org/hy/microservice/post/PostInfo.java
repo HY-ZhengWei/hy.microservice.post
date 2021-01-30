@@ -72,8 +72,8 @@ public class PostInfo extends BaseViewMode
     /** 是否推荐。1推荐；0不推荐 */
     private Integer isRecommend;
 
-    /** 发帖数量 */
-    private Integer postCount;
+    /** 我发帖的数量 */
+    private Integer myIsPostCount;
     
     
     
@@ -400,12 +400,24 @@ public class PostInfo extends BaseViewMode
         this.myIsComment = myIsComment;
     }
 
-    public Integer getPostCount() {
-        return postCount;
+    
+    /**
+     * 获取：我发帖的数量
+     */
+    public Integer getMyIsPostCount()
+    {
+        return myIsPostCount;
     }
 
-    public void setPostCount(Integer postCount) {
-        this.postCount = postCount;
+    
+    /**
+     * 设置：我发帖的数量
+     * 
+     * @param myIsPostCount 
+     */
+    public void setMyIsPostCount(Integer myIsPostCount)
+    {
+        this.myIsPostCount = myIsPostCount;
     }
 
 

@@ -61,6 +61,23 @@ public class PostInfoService
     
     
     /**
+     * 查询关于我的统计数据。如，我的点赞数、评论数量、收藏数量、发帖数量等
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-01-30
+     * @version     v1.0
+     *
+     * @param i_UserID
+     * @return
+     */
+    public PostInfo queryMyCount(String i_UserID)
+    {
+        return this.postInfoDAO.queryMyCount(i_UserID);
+    }
+    
+    
+    
+    /**
      * 添加发帖子
      * 
      * @author      ZhengWei(HY)

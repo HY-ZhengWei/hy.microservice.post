@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hy.common.xml.annotation.XType;
 import org.hy.common.xml.annotation.Xjava;
+import org.hy.common.xml.annotation.Xparam;
 import org.hy.common.xml.annotation.Xsql;
 
 
@@ -48,6 +49,21 @@ public interface IPostInfoDAO
      */
     @Xsql("XSQL_PostInfo_Query_Count")
     public Long queryPostsCount(PostInfo i_PostInfo);
+    
+    
+    
+    /**
+     * 查询关于我的统计数据。如，我的点赞数、评论数量、收藏数量、发帖数量等
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-01-30
+     * @version     v1.0
+     *
+     * @param i_UserID
+     * @return
+     */
+    @Xsql(id="XSQL_PostInfo_Query_MyCount" ,returnOne=true)
+    public PostInfo queryMyCount(@Xparam("userID") String i_UserID);
 
     
 
@@ -168,4 +184,5 @@ public interface IPostInfoDAO
      */
     @Xsql("XSQL_PostInfo_Update_PostByID")
     public int updatePost(PostInfo i_PostInfo);
+    
 }

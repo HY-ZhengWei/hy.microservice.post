@@ -19,6 +19,9 @@ public class BaseViewMode extends SerializableDef
 {
     private static final long serialVersionUID = -3998918924300953503L;
 
+    /** 票据号 */
+    private String token;
+    
     /** 设备号 */
     private String  deviceNo;
 
@@ -70,8 +73,28 @@ public class BaseViewMode extends SerializableDef
     /** 总行数 */
     private Long    totalCount;
 
+    
+    
+    /**
+     * 获取：票据号
+     */
+    public String getToken()
+    {
+        return token;
+    }
 
     
+    /**
+     * 设置：票据号
+     * 
+     * @param token 
+     */
+    public void setToken(String token)
+    {
+        this.token = token;
+    }
+
+
     /**
      * 数量转为短数输出显示
      * 

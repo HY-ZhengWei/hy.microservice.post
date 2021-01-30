@@ -191,6 +191,49 @@
         
         
         
+        <sql id="XSQL_PostInfo_Query_MyCount"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  (
+                         SELECT  COUNT(1)
+                           FROM  PostInfo          SE
+                          WHERE  SE.userID = ':userID'
+                        )    AS  myIsPostCount
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserComment       SD
+                          WHERE  SD.userID = ':userID'
+                        )    AS  myIsComment
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserOpenLog       SC
+                          WHERE  SC.userID = ':userID'
+                        )    AS  myIsOpen 
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserFavoritesLog  SB
+                          WHERE  SB.userID = ':userID'
+                        )    AS  myIsFavorites 
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserNiceLog       SA
+                          WHERE  SA.userID = ':userID'
+                        )    AS  myIsNice
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.PostInfo</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+            
+        </sql>
+        
+        
+        
         <sql id="XSQL_PostInfo_Update_GoodCount_Add"> 
         
             <dataSourceGroup ref="DSG_MS_Post" />

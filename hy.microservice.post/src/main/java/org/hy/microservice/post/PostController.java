@@ -121,13 +121,46 @@ public class PostController
     @ResponseBody
     public BaseResponse<PostInfo> queryPosts(@RequestBody PostInfo i_PostInfo)
     {
-        BaseResponse<PostInfo> v_Ret = new BaseResponse<PostInfo>();
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
-        v_Ret.setData(this.postService.queryPosts(i_PostInfo));
-        v_Ret.getData().setRecordCount(this.postService.queryPostsCount(i_PostInfo));
-        v_Ret.getData().calcPage(i_PostInfo);
+        v_RetResp.setData(this.postService.queryPosts(i_PostInfo));
+        v_RetResp.getData().setRecordCount(this.postService.queryPostsCount(i_PostInfo));
+        v_RetResp.getData().calcPage(i_PostInfo);
         
-        return v_Ret;
+        return v_RetResp;
+    }
+    
+    
+    
+    /**
+     * 获取用户统计信息（点赞量、发帖量、收藏量、评论量）
+     *
+     * @author      LiHao
+     * @createDate  2020-10-20
+     * @version     v1.0
+     *
+     * @param i_PostInfo
+     * @return
+     */
+    @RequestMapping(value="myCount" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public BaseResponse<PostInfo> queryPostsCount(@RequestBody PostInfo i_PostInfo)
+    {
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
+        {
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+        }
+        
+        v_RetResp.setData(this.postService.queryMyCount(i_PostInfo.getUserID()));
+
+        return v_RetResp;
     }
     
     
@@ -416,46 +449,6 @@ public class PostController
 
 
 
-    /**
-     * 获取用户发帖子详情
-     *
-     * @author      LiHao
-     * @createDate  2020-10-20
-     * @version     v1.0
-     *
-     * @param i_PostInfo
-     * @return
-     */
-    @RequestMapping(value="postsCount" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public BaseResponse<PostInfo> queryPostsCount(@RequestBody PostInfo i_PostInfo)
-    {
-        List<PostInfo> v_Ret = this.postService.queryPosts(i_PostInfo);
-
-        PostInfo postInfo = new PostInfo();
-        if (v_Ret.size() > 0)
-        {
-            int commentCount = 0;                // 我的回复数量
-            int favoritesCount = 0;              // 我的收藏数量
-            int niceCount = 0;                   // 我的点赞数量
-            for (PostInfo postInfo1 : v_Ret)
-            {
-                commentCount   +=  postInfo1.getMyIsComment();
-                favoritesCount +=  postInfo1.getFavoritesCount();
-                niceCount      +=  postInfo1.getMyIsNice();
-            }
-
-            postInfo.setMyIsNice(niceCount);
-            postInfo.setMyIsComment(commentCount);
-            postInfo.setMyIsFavorites(favoritesCount);
-            postInfo.setPostCount(v_Ret.size());
-        }
-
-        return new BaseResponse<PostInfo>().setData(postInfo);
-    }
-
-    
-    
     /**
      * 查询用户收藏的发帖子列表
      *

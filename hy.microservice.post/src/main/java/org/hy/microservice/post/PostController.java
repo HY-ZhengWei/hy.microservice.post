@@ -117,7 +117,7 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="list" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="list" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> queryPosts(@RequestBody PostInfo i_PostInfo)
     {
@@ -142,25 +142,49 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="goodCountAdd" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="goodCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> goodCountAdd(@RequestBody PostInfo i_PostInfo)
     {
-        if ( this.postService.goodCountAdd(i_PostInfo) )
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
         {
-            UserNiceLog v_Log = new UserNiceLog();
-            
-            v_Log.setNiceID(  i_PostInfo.getId());
-            v_Log.setNiceType(i_PostInfo.getServiceType());
-            v_Log.setUserID(  i_PostInfo.getUserID());
-            
-            if ( !this.userNiceLogService.goodCountAdd(v_Log) )
-            {
-                this.postService.goodCountSubtract(i_PostInfo);
-            }
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
-        return this.queryPosts(i_PostInfo);
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
+        {
+            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+        }
+        
+        UserNiceLog v_Log = new UserNiceLog();
+        
+        v_Log.setNiceID(  i_PostInfo.getId());
+        v_Log.setNiceType(i_PostInfo.getServiceType());
+        v_Log.setUserID(  i_PostInfo.getUserID());
+        
+        try
+        {
+            if ( this.userNiceLogService.goodCountAdd(v_Log) )
+            {
+                this.postService.goodCountAdd(i_PostInfo);
+                
+                v_RetResp = this.queryPosts(i_PostInfo);
+                return v_RetResp;
+            }
+        }
+        catch (Exception exce)
+        {
+            $Logger.error("不能重复点赞" ,exce);
+        }
+        
+        return v_RetResp.setCode("-999").setMessage("异常");
     }
     
     
@@ -175,25 +199,49 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="goodCountSubtract" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="goodCountSubtract" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> goodCountSubtract(@RequestBody PostInfo i_PostInfo)
     {
-        if ( this.postService.goodCountSubtract(i_PostInfo) )
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
         {
-            UserNiceLog v_Log = new UserNiceLog();
-            
-            v_Log.setNiceID(  i_PostInfo.getId());
-            v_Log.setNiceType(i_PostInfo.getServiceType());
-            v_Log.setUserID(  i_PostInfo.getUserID());
-            
-            if ( !this.userNiceLogService.goodCountSubtract(v_Log) )
-            {
-                this.postService.goodCountAdd(i_PostInfo);
-            }
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
-        return this.queryPosts(i_PostInfo);
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
+        {
+            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+        }
+        
+        UserNiceLog v_Log = new UserNiceLog();
+        
+        v_Log.setNiceID(  i_PostInfo.getId());
+        v_Log.setNiceType(i_PostInfo.getServiceType());
+        v_Log.setUserID(  i_PostInfo.getUserID());
+        
+        try
+        {
+            if ( this.userNiceLogService.goodCountSubtract(v_Log) )
+            {
+                this.postService.goodCountSubtract(i_PostInfo);
+                
+                v_RetResp = this.queryPosts(i_PostInfo);
+                return v_RetResp;
+            }
+        }
+        catch (Exception exce)
+        {
+            $Logger.error("不能重复点赞" ,exce);
+        }
+    
+        return v_RetResp.setCode("-999").setMessage("异常");
     }
     
     
@@ -208,25 +256,48 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="favoritesCountAdd" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="favoritesCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> favoritesCountAdd(@RequestBody PostInfo i_PostInfo)
     {
-        if ( this.postService.favoritesCountAdd(i_PostInfo) )
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
         {
-            UserFavoritesLog v_Log = new UserFavoritesLog();
-            
-            v_Log.setFavoritesID(i_PostInfo.getId());
-            v_Log.setServiceType(i_PostInfo.getServiceType());
-            v_Log.setUserID(     i_PostInfo.getUserID());
-            
-            if ( !this.userFavoritesLogService.addLog(v_Log) )
-            {
-                this.postService.favoritesCountSubtract(i_PostInfo);
-            }
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
-        return this.queryPosts(i_PostInfo);
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
+        {
+            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+        }
+        
+        UserFavoritesLog v_Log = new UserFavoritesLog();
+        
+        v_Log.setFavoritesID(i_PostInfo.getId());
+        v_Log.setServiceType(i_PostInfo.getServiceType());
+        v_Log.setUserID(     i_PostInfo.getUserID());
+        
+        try
+        {
+            if ( this.userFavoritesLogService.addLog(v_Log) )
+            {
+                this.postService.favoritesCountAdd(i_PostInfo);
+                v_RetResp = this.queryPosts(i_PostInfo);
+                return v_RetResp;
+            }
+        }
+        catch (Exception exce)
+        {
+            $Logger.error("不能重复收藏" ,exce);
+        }
+        
+        return v_RetResp.setCode("-999").setMessage("异常");
     }
     
     
@@ -241,25 +312,49 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="favoritesCountSubtract" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="favoritesCountSubtract" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> favoritesCountSubtract(@RequestBody PostInfo i_PostInfo)
     {
-        if ( this.postService.favoritesCountSubtract(i_PostInfo) )
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
         {
-            UserFavoritesLog v_Log = new UserFavoritesLog();
-            
-            v_Log.setFavoritesID(i_PostInfo.getId());
-            v_Log.setServiceType(i_PostInfo.getServiceType());
-            v_Log.setUserID(     i_PostInfo.getUserID());
-            
-            if ( !this.userFavoritesLogService.delLog(v_Log) )
-            {
-                this.postService.favoritesCountAdd(i_PostInfo);
-            }
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
-        return this.queryPosts(i_PostInfo);
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
+        {
+            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+        }
+        
+        UserFavoritesLog v_Log = new UserFavoritesLog();
+        
+        v_Log.setFavoritesID(i_PostInfo.getId());
+        v_Log.setServiceType(i_PostInfo.getServiceType());
+        v_Log.setUserID(     i_PostInfo.getUserID());
+        
+        try
+        {
+            if ( this.userFavoritesLogService.delLog(v_Log) )
+            {
+                this.postService.favoritesCountSubtract(i_PostInfo);
+                
+                v_RetResp = this.queryPosts(i_PostInfo);
+                return v_RetResp;
+            }
+        }
+        catch (Exception exce)
+        {
+            $Logger.error("不能重复收藏" ,exce);
+        }
+        
+        return v_RetResp.setCode("-999").setMessage("异常");
     }
     
     
@@ -274,22 +369,49 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="openCountAdd" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="openCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> openCountAdd(@RequestBody PostInfo i_PostInfo)
     {
-        if ( this.postService.openCountAdd(i_PostInfo) )
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
         {
-            UserOpenLog v_Log = new UserOpenLog();
-            
-            v_Log.setOpenID(     i_PostInfo.getId());
-            v_Log.setServiceType(i_PostInfo.getServiceType());
-            v_Log.setUserID(     i_PostInfo.getUserID());
-            
-            this.userOpenLogService.addLog(v_Log);  // 不做异常时，阅读减的操作
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
-        return this.queryPosts(i_PostInfo);
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
+        {
+            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+        }
+        
+        UserOpenLog v_Log = new UserOpenLog();
+        
+        v_Log.setOpenID(     i_PostInfo.getId());
+        v_Log.setServiceType(i_PostInfo.getServiceType());
+        v_Log.setUserID(     i_PostInfo.getUserID());
+        
+        try
+        {
+            if ( this.userOpenLogService.addLog(v_Log) )
+            {
+                this.postService.openCountAdd(i_PostInfo);
+                
+                v_RetResp = this.queryPosts(i_PostInfo);
+                return v_RetResp;
+            }
+        }
+        catch (Exception exce)
+        {
+            $Logger.error("不能重复已阅" ,exce);
+        }
+        
+        return v_RetResp.setCode("-999").setMessage("异常");
     }
 
 
@@ -304,7 +426,7 @@ public class PostController
      * @param i_PostInfo
      * @return
      */
-    @RequestMapping(value="postsCount" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="postsCount" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> queryPostsCount(@RequestBody PostInfo i_PostInfo)
     {
@@ -344,7 +466,7 @@ public class PostController
      * @param i_UserFavoritesLog
      * @return
      */
-    @RequestMapping(value="favoritesPosts" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="favoritesPosts" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public BaseResponse<PostInfo> queryFavoritesPosts(@RequestBody UserFavoritesLog i_UserFavoritesLog)
     {
@@ -367,7 +489,7 @@ public class PostController
      * @param i_UserNiceLog
      * @return
      */
-    @RequestMapping(value="nicePosts" ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="nicePosts" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<PostInfo> queryNicePosts(@RequestBody UserNiceLog i_UserNiceLog)
     {

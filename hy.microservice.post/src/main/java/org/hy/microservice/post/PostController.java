@@ -1,7 +1,5 @@
 package org.hy.microservice.post;
 
-import java.util.List;
-
 import org.hy.common.Help;
 import org.hy.common.xml.log.Logger;
 import org.hy.microservice.post.common.BaseResponse;
@@ -445,52 +443,6 @@ public class PostController
         }
         
         return v_RetResp.setCode("-999").setMessage("异常");
-    }
-
-
-
-    /**
-     * 查询用户收藏的发帖子列表
-     *
-     * @author      Lihao
-     * @createDate  2020-11-7
-     * @version     v1.0
-     *
-     * @param i_UserFavoritesLog
-     * @return
-     */
-    @RequestMapping(value="favoritesPosts" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public BaseResponse<PostInfo> queryFavoritesPosts(@RequestBody UserFavoritesLog i_UserFavoritesLog)
-    {
-        List<PostInfo> v_Ret = null;
-
-        v_Ret = this.userFavoritesLogService.queryFavoritesLog(i_UserFavoritesLog);
-
-        return new BaseResponse<PostInfo>().setData(v_Ret);
-    }
-
-
-    
-    /**
-     * 查询用户点赞的发帖子列表
-     *
-     * @author      Lihao
-     * @createDate  2020-11-7
-     * @version     v1.0
-     *
-     * @param i_UserNiceLog
-     * @return
-     */
-    @RequestMapping(value="nicePosts" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<PostInfo> queryNicePosts(@RequestBody UserNiceLog i_UserNiceLog)
-    {
-        List<PostInfo> v_Ret = null;
-
-        v_Ret = this.userNiceLogService.queryUserNiceLog(i_UserNiceLog);
-
-        return v_Ret;
     }
     
 }

@@ -129,12 +129,12 @@
                             AND  SA.niceID   = A.id
                             AND  SA.niceType = A.serviceType
                         )    AS  myIsNice
-                        ,(
+                       ,(
                           SELECT  COUNT(1)
-                            FROM  UserComment  SA
-                           WHERE  SA.userID      = ':userID'
-                             AND  SA.postID      = A.id
-                             AND  SA.serviceType = A.serviceType
+                            FROM  UserComment  SD
+                           WHERE  SD.userID      = ':userID'
+                             AND  SD.postID      = A.id
+                             AND  SD.serviceType = A.serviceType
                        )  AS  myIsComment
                        ,A.isRecommend        
                        ,A.isShow        
@@ -150,6 +150,34 @@
                 <[ AND  A.userID      = ':userID'       ]>
                 <[ AND  A.postTypeID  = ':postTypeID'   ]>
                 <[ AND  A.serviceType = ':serviceType'  ]>
+                <[ AND  EXISTS (SELECT  :myIsNice
+                                  FROM  UserNiceLog  WA
+                                 WHERE  WA.userID   = ':userID'
+                                   AND  WA.niceID   = A.id
+                                   AND  WA.niceType = A.serviceType
+                               )
+                ]>
+                <[ AND  EXISTS (SELECT  :myIsFavorites
+                                  FROM  UserFavoritesLog  WB
+                                 WHERE  WB.userID      = ':userID'
+                                   AND  WB.favoritesID = A.id
+                                   AND  WB.serviceType = A.serviceType
+                               )
+                ]>
+                <[ AND  EXISTS (SELECT  :myIsOpen
+                                  FROM  UserOpenLog  WC
+                                 WHERE  WC.userID      = ':userID'
+                                   AND  WC.openID      = A.id
+                                   AND  WC.serviceType = A.serviceType
+                               )
+                ]>
+                <[ AND  EXISTS (SELECT  :myIsComment
+                                  FROM  UserComment  WD
+                                 WHERE  WD.userID      = ':userID'
+                                   AND  WD.postID      = A.id
+                                   AND  WD.serviceType = A.serviceType
+                               )
+                ]>
                  ORDER  BY A.createTime DESC
                           ,A.goodCount  DESC
                  <[ LIMIT :startIndex, :pagePerCount    ]>
@@ -179,6 +207,34 @@
                 <[ AND  A.userID      = ':userID'       ]>
                 <[ AND  A.postTypeID  = ':postTypeID'   ]>
                 <[ AND  A.serviceType = ':serviceType'  ]>
+                <[ AND  EXISTS (SELECT  :myIsNice
+                                  FROM  UserNiceLog  WA
+                                 WHERE  WA.userID   = ':userID'
+                                   AND  WA.niceID   = A.id
+                                   AND  WA.niceType = A.serviceType
+                               )
+                ]>
+                <[ AND  EXISTS (SELECT  :myIsFavorites
+                                  FROM  UserFavoritesLog  WB
+                                 WHERE  WB.userID      = ':userID'
+                                   AND  WB.favoritesID = A.id
+                                   AND  WB.serviceType = A.serviceType
+                               )
+                ]>
+                <[ AND  EXISTS (SELECT  :myIsOpen
+                                  FROM  UserOpenLog  WC
+                                 WHERE  WC.userID      = ':userID'
+                                   AND  WC.openID      = A.id
+                                   AND  WC.serviceType = A.serviceType
+                               )
+                ]>
+                <[ AND  EXISTS (SELECT  :myIsComment
+                                  FROM  UserComment  WD
+                                 WHERE  WD.userID      = ':userID'
+                                   AND  WD.postID      = A.id
+                                   AND  WD.serviceType = A.serviceType
+                               )
+                ]>
                 ]]>
             </content>
             

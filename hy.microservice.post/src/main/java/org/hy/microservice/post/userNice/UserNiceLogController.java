@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RestController
-@RequestMapping("no/userNice")
+@RequestMapping("userNice")
 public class UserNiceLogController 
 {
 

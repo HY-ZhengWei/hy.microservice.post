@@ -30,14 +30,14 @@ public class UserComment extends BaseViewMode implements TreeObjectNode<UserComm
     /** 帖子编号 */
     private String  postID;     
     
-    /** 帖子内容 */
+    /** 评论内容 */
     private String  comment;  
     
     /** 评分 */
     private Integer score;   
     
     /** 点赞次数 */
-    private Integer goodCount;
+    private Long    goodCount;
     
     /** 评论的回复 */
     private List<UserComment> replys;
@@ -72,7 +72,7 @@ public class UserComment extends BaseViewMode implements TreeObjectNode<UserComm
 
     
     /**
-     * 获取：帖子内容
+     * 获取：评论内容
      */
     public String getComment()
     {
@@ -92,7 +92,7 @@ public class UserComment extends BaseViewMode implements TreeObjectNode<UserComm
     /**
      * 获取：点赞次数
      */
-    public Integer getGoodCount()
+    public Long getGoodCount()
     {
         return goodCount;
     }
@@ -141,7 +141,7 @@ public class UserComment extends BaseViewMode implements TreeObjectNode<UserComm
 
     
     /**
-     * 设置：帖子内容
+     * 设置：评论内容
      * 
      * @param comment 
      */
@@ -167,7 +167,7 @@ public class UserComment extends BaseViewMode implements TreeObjectNode<UserComm
      * 
      * @param goodCount 
      */
-    public void setGoodCount(Integer goodCount)
+    public void setGoodCount(Long goodCount)
     {
         this.goodCount = goodCount;
     }

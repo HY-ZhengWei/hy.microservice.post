@@ -125,11 +125,13 @@
                        ,updateTime 
                   FROM  UserComment
                  WHERE  isDel       = 0
+              <[   AND  id          = ':id'          ]>
               <[   AND  parentID    = ':parentID'    ]>
               <[   AND  userID      = ':userID'      ]>
-              <[   AND  post_id     = ':postID'      ]>
+              <[   AND  postID      = ':postID'      ]>
               <[   AND  serviceType = ':serviceType' ]>
-                ORDER BY createTime DESC
+                 ORDER  BY createTime DESC
+              <[ LIMIT :startIndex, :pagePerCount    ]>
                 ]]>
             </content>
             
@@ -138,6 +140,34 @@
                 <cfill>setter(colValue)</cfill>
             </result>
 
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserComment_Query_Count"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  COUNT(1)  AS totalCount
+                  FROM  UserComment
+                 WHERE  isDel       = 0
+              <[   AND  id          = ':id'          ]>
+              <[   AND  parentID    = ':parentID'    ]>
+              <[   AND  userID      = ':userID'      ]>
+              <[   AND  postID      = ':postID'      ]>
+              <[   AND  serviceType = ':serviceType' ]>
+                 ORDER  BY createTime DESC
+              <[ LIMIT :startIndex, :pagePerCount    ]>
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.userComment.UserComment</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+            
         </sql>
 
 
@@ -166,7 +196,7 @@
                  WHERE  isDel       = 0
               <[   AND  parentID    = ':parentID'    ]>
               <[   AND  userID      = ':userID'      ]>
-              <[   AND  post_id     = ':postID'      ]>
+              <[   AND  postID      = ':postID'      ]>
               <[   AND  serviceType = ':serviceType' ]>
                 ORDER BY createTime DESC
                 ]]>

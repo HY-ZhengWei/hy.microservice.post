@@ -1,4 +1,4 @@
-package org.hy.microservice.post.common;
+package org.hy.microservice.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

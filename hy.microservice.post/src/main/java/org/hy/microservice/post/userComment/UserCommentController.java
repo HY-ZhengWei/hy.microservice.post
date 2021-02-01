@@ -2,7 +2,7 @@ package org.hy.microservice.post.userComment;
 
 import org.hy.common.Help;
 import org.hy.common.xml.log.Logger;
-import org.hy.microservice.post.common.BaseResponse;
+import org.hy.microservice.common.BaseResponse;
 import org.hy.microservice.post.userNice.UserNiceLog;
 import org.hy.microservice.post.userNice.UserNiceLogService;
 import org.springframework.beans.factory.annotation.Autowired;

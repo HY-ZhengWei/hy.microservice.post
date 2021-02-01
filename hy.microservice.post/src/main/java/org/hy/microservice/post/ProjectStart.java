@@ -4,7 +4,7 @@ import org.hy.common.xml.plugins.XJavaSpringAnnotationConfigServletWebServerAppl
 import org.hy.common.xml.plugins.analyse.AnalyseObjectServlet;
 import org.hy.common.xml.plugins.analyse.AnalyseServerServlet;
 import org.hy.common.xml.plugins.analyse.AnalysesServlet;
-import org.hy.microservice.post.common.VueServlet;
+import org.hy.microservice.common.VueServlet;
 import org.hy.microservice.post.config.XJavaSpringInitialzer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

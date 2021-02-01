@@ -1,2 +1,2 @@
-# hy.microservice.file
-文件（图片、视频）上传、下载的微服务
+# hy.microservice.post
+贴子、留言、点赞的微服务

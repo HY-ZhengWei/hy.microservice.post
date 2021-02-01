@@ -1,7 +1,7 @@
 package org.hy.microservice.post.userNice;
 
+import org.hy.microservice.common.BaseResponse;
 import org.hy.microservice.post.PostInfo;
-import org.hy.microservice.post.common.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

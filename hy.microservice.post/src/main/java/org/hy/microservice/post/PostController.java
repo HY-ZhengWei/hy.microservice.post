@@ -2,7 +2,7 @@ package org.hy.microservice.post;
 
 import org.hy.common.Help;
 import org.hy.common.xml.log.Logger;
-import org.hy.microservice.post.common.BaseResponse;
+import org.hy.microservice.common.BaseResponse;
 import org.hy.microservice.post.userFavorites.UserFavoritesLog;
 import org.hy.microservice.post.userFavorites.UserFavoritesLogService;
 import org.hy.microservice.post.userNice.UserNiceLog;

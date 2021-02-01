@@ -1,4 +1,4 @@
-package org.hy.microservice.post.common;
+package org.hy.microservice.common;
 
 import java.io.File;
 import java.io.IOException;

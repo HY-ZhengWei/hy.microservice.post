@@ -1,6 +1,6 @@
 package org.hy.microservice.post.userOpen;
 
-import org.hy.microservice.post.common.BaseViewMode;
+import org.hy.microservice.common.BaseViewMode;
 
 
 

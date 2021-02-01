@@ -1,5 +1,6 @@
 package org.hy.microservice.post.common;
 
+import org.hy.microservice.common.CommonInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

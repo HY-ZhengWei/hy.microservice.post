@@ -16,6 +16,10 @@
             <item if="IsInitDSG_MS_Post.getValue == 启用">
                 <value>config/post/ms.post.sys.DB.Config.xml</value>
             </item>
+            
+            <item>
+                <value>config/post/ms.post.XSSO.xml</value>
+            </item>
 
             <!-- 加载数据库目录所有配置文件 -->
             <item>

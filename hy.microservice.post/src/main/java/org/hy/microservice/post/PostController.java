@@ -3,6 +3,8 @@ package org.hy.microservice.post;
 import org.hy.common.Help;
 import org.hy.common.xml.log.Logger;
 import org.hy.microservice.common.BaseResponse;
+import org.hy.microservice.post.user.UserSSO;
+import org.hy.microservice.post.user.UserService;
 import org.hy.microservice.post.userFavorites.UserFavoritesLog;
 import org.hy.microservice.post.userFavorites.UserFavoritesLogService;
 import org.hy.microservice.post.userNice.UserNiceLog;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -52,6 +55,10 @@ public class PostController
     @Qualifier("UserFavoritesLogService")
     public UserFavoritesLogService userFavoritesLogService;
     
+    @Autowired
+    @Qualifier("UserService")
+    public UserService userService;
+    
     
     
     /**
@@ -66,29 +73,48 @@ public class PostController
      */
     @RequestMapping(value="send" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> send(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> send(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
-        BaseResponse<PostInfo> v_Ret = new BaseResponse<PostInfo>();
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
         if ( i_PostInfo == null )
         {
-            return v_Ret.setCode("-1").setMessage("未收到任何参数");
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
         if ( Help.isNull(i_PostInfo.getTitle()) ) 
         {
-            return v_Ret.setCode("-2").setMessage("帖子标题为空");
+            return v_RetResp.setCode("-2").setMessage("帖子标题为空");
         }
         
-        if ( Help.isNull(i_PostInfo.getTitle()) ) 
+        if ( Help.isNull(i_PostInfo.getUserID()) ) 
         {
-            return v_Ret.setCode("-3").setMessage("发帖人员编码为空");
+            return v_RetResp.setCode("-3").setMessage("发帖人员编码为空");
         }
         
         if ( Help.isNull(i_PostInfo.getContent()) ) 
         {
-            return v_Ret.setCode("-4").setMessage("发帖内容为空");
+            return v_RetResp.setCode("-4").setMessage("发帖内容为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         boolean v_AddRet = this.postService.addPost(i_PostInfo);
         if ( v_AddRet )
@@ -99,7 +125,7 @@ public class PostController
         else
         {
             $Logger.error("用户（" + i_PostInfo.getUserName() + i_PostInfo.getUserID() + "）发贴" + i_PostInfo.getTitle() + "，异常");
-            return v_Ret.setCode("-999").setMessage("系统异常");
+            return v_RetResp.setCode("-999").setMessage("系统异常");
         }
     }
     
@@ -142,7 +168,7 @@ public class PostController
      */
     @RequestMapping(value="myCount" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> queryPostsCount(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> queryPostsCount(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
@@ -155,6 +181,25 @@ public class PostController
         {
             return v_RetResp.setCode("-2").setMessage("用户编号为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         v_RetResp.setData(this.postService.queryMyCount(i_PostInfo.getUserID()));
 
@@ -175,7 +220,7 @@ public class PostController
      */
     @RequestMapping(value="goodCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> goodCountAdd(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> goodCountAdd(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
@@ -184,15 +229,39 @@ public class PostController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_PostInfo.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("帖子编号为空");
+        }
+        
         if ( Help.isNull(i_PostInfo.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_PostInfo.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         UserNiceLog v_Log = new UserNiceLog();
         
@@ -232,7 +301,7 @@ public class PostController
      */
     @RequestMapping(value="goodCountSubtract" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> goodCountSubtract(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> goodCountSubtract(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
@@ -241,15 +310,39 @@ public class PostController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_PostInfo.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("帖子编号为空");
+        }
+        
         if ( Help.isNull(i_PostInfo.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_PostInfo.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         UserNiceLog v_Log = new UserNiceLog();
         
@@ -289,7 +382,7 @@ public class PostController
      */
     @RequestMapping(value="favoritesCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> favoritesCountAdd(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> favoritesCountAdd(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
@@ -298,15 +391,39 @@ public class PostController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_PostInfo.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("帖子编号为空");
+        }
+        
         if ( Help.isNull(i_PostInfo.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_PostInfo.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         UserFavoritesLog v_Log = new UserFavoritesLog();
         
@@ -345,7 +462,7 @@ public class PostController
      */
     @RequestMapping(value="favoritesCountSubtract" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> favoritesCountSubtract(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> favoritesCountSubtract(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
@@ -354,15 +471,39 @@ public class PostController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_PostInfo.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("帖子编号为空");
+        }
+        
         if ( Help.isNull(i_PostInfo.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_PostInfo.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         UserFavoritesLog v_Log = new UserFavoritesLog();
         
@@ -402,7 +543,7 @@ public class PostController
      */
     @RequestMapping(value="openCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> openCountAdd(@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> openCountAdd(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
@@ -411,15 +552,39 @@ public class PostController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_PostInfo.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("帖子编号为空");
+        }
+        
         if ( Help.isNull(i_PostInfo.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_PostInfo.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+        }
+        
         
         UserOpenLog v_Log = new UserOpenLog();
         

@@ -3,6 +3,8 @@ package org.hy.microservice.post.userComment;
 import org.hy.common.Help;
 import org.hy.common.xml.log.Logger;
 import org.hy.microservice.common.BaseResponse;
+import org.hy.microservice.post.user.UserSSO;
+import org.hy.microservice.post.user.UserService;
 import org.hy.microservice.post.userNice.UserNiceLog;
 import org.hy.microservice.post.userNice.UserNiceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -40,6 +43,10 @@ public class UserCommentController
     @Qualifier("UserNiceLogService")
     public UserNiceLogService userNiceLogService;
     
+    @Autowired
+    @Qualifier("UserService")
+    public UserService userService;
+    
     
     
     /**
@@ -54,29 +61,48 @@ public class UserCommentController
      */
     @RequestMapping(value="send" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<UserComment> send(@RequestBody UserComment i_UserComment)
+    public BaseResponse<UserComment> send(@RequestParam("token") String i_Token ,@RequestBody UserComment i_UserComment)
     {
-        BaseResponse<UserComment> v_Ret = new BaseResponse<UserComment>();
+        BaseResponse<UserComment> v_RetResp = new BaseResponse<UserComment>();
         
         if ( i_UserComment == null )
         {
-            return v_Ret.setCode("-1").setMessage("未收到任何参数");
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
         if ( Help.isNull(i_UserComment.getComment()) ) 
         {
-            return v_Ret.setCode("-2").setMessage("评论内容为空");
+            return v_RetResp.setCode("-2").setMessage("评论内容为空");
         }
         
         if ( Help.isNull(i_UserComment.getPostID()) ) 
         {
-            return v_Ret.setCode("-3").setMessage("被评论对象的编码为空");
+            return v_RetResp.setCode("-3").setMessage("被评论对象的编码为空");
         }
         
-        if ( Help.isNull(i_UserComment.getUserIcon()) ) 
+        if ( Help.isNull(i_UserComment.getUserID()) ) 
         {
-            return v_Ret.setCode("-4").setMessage("评论用户编码为空");
+            return v_RetResp.setCode("-4").setMessage("评论用户编码为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_UserComment.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("评论用户与登录用户不一致");
+        }
+        
         
         boolean v_AddRet = this.commentService.addComment(i_UserComment);
         if ( v_AddRet )
@@ -87,7 +113,7 @@ public class UserCommentController
         else
         {
             $Logger.error("用户（" + i_UserComment.getUserName() + i_UserComment.getUserID() + "）评论：" + i_UserComment.getComment() + "，异常");
-            return v_Ret.setCode("-999").setMessage("系统异常");
+            return v_RetResp.setCode("-999").setMessage("系统异常");
         }
     }
     
@@ -130,7 +156,7 @@ public class UserCommentController
      */
     @RequestMapping(value="goodCountAdd" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<UserComment> goodCountAdd(@RequestBody UserComment i_UserComment)
+    public BaseResponse<UserComment> goodCountAdd(@RequestParam("token") String i_Token ,@RequestBody UserComment i_UserComment)
     {
         BaseResponse<UserComment> v_RetResp = new BaseResponse<UserComment>();
         
@@ -148,6 +174,25 @@ public class UserCommentController
         {
             return v_RetResp.setCode("-3").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_UserComment.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("评论用户与登录用户不一致");
+        }
+        
         
         UserNiceLog v_Log = new UserNiceLog();
         
@@ -187,7 +232,7 @@ public class UserCommentController
      */
     @RequestMapping(value="goodCountSubtract" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<UserComment> goodCountSubtract(@RequestBody UserComment i_UserComment)
+    public BaseResponse<UserComment> goodCountSubtract(@RequestParam("token") String i_Token ,@RequestBody UserComment i_UserComment)
     {
         BaseResponse<UserComment> v_RetResp = new BaseResponse<UserComment>();
         
@@ -205,6 +250,25 @@ public class UserCommentController
         {
             return v_RetResp.setCode("-3").setMessage("业务类型为空");
         }
+        
+        
+        // 验证票据及用户登录状态
+        if ( Help.isNull(i_Token) ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        UserSSO v_User = this.userService.getUser(i_Token);
+        if ( v_User == null ) 
+        {
+            return v_RetResp.setCode("-901").setMessage("非法访问");
+        }
+        
+        if ( !v_User.getUserId().equals(i_UserComment.getUserID()) )
+        {
+            return v_RetResp.setCode("-902").setMessage("评论用户与登录用户不一致");
+        }
+        
         
         UserNiceLog v_Log = new UserNiceLog();
         

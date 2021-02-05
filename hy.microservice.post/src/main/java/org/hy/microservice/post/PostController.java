@@ -1,6 +1,7 @@
 package org.hy.microservice.post;
 
 import org.hy.common.Help;
+import org.hy.common.app.Param;
 import org.hy.common.xml.log.Logger;
 import org.hy.microservice.common.BaseResponse;
 import org.hy.microservice.post.user.UserSSO;
@@ -59,6 +60,10 @@ public class PostController
     @Qualifier("UserService")
     public UserService userService;
     
+    @Autowired
+    @Qualifier("MS_Post_IsCheckToken")
+    public Param isCheckToken;
+    
     
     
     /**
@@ -98,21 +103,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         
@@ -183,21 +191,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         
@@ -245,21 +256,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         
@@ -326,21 +340,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         
@@ -407,21 +424,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         
@@ -487,21 +507,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         
@@ -568,21 +591,24 @@ public class PostController
         }
         
         
-        // 验证票据及用户登录状态
-        if ( Help.isNull(i_Token) ) 
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
         {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        UserSSO v_User = this.userService.getUser(i_Token);
-        if ( v_User == null ) 
-        {
-            return v_RetResp.setCode("-901").setMessage("非法访问");
-        }
-        
-        if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
-        {
-            return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
+            {
+                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+            }
         }
         
         

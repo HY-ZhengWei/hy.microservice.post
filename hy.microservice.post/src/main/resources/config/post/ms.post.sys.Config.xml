@@ -26,6 +26,13 @@
                 <comment>顶级包的路径。用于初始化。一般不修改</comment>
             </item>
             
+            
+            <item id="MS_Post_IsCheckToken">
+                <name>MS_Post_IsCheckToken</name>
+                <value>false</value>
+                <comment>是否验证用户登录的票据</comment>
+            </item>
+            
         </xparam>
         
     </xconfig>

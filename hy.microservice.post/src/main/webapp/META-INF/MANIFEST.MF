@@ -1,5 +1,5 @@
-Manifest-Version: 1.0.0
+Manifest-Version: 1.0.1
 Created-By: HY.ZhengWei@qq.com  2021
-Specification-Version: 1.0.0  2021-02-04
+Specification-Version: 1.0.1  2021-02-06
 SourceCode: https://github.com/HY-ZhengWei/hy.microservice.post
 Build-JDK: 1.8

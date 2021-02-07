@@ -173,14 +173,19 @@ public class UserCommentController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_UserComment.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("评论编号为空");
+        }
+        
         if ( Help.isNull(i_UserComment.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_UserComment.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
         
         
@@ -252,14 +257,19 @@ public class UserCommentController
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
         }
         
+        if ( Help.isNull(i_UserComment.getId()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("评论编号为空");
+        }
+        
         if ( Help.isNull(i_UserComment.getUserID()) ) 
         {
-            return v_RetResp.setCode("-2").setMessage("用户编号为空");
+            return v_RetResp.setCode("-3").setMessage("用户编号为空");
         }
         
         if ( Help.isNull(i_UserComment.getServiceType()) ) 
         {
-            return v_RetResp.setCode("-3").setMessage("业务类型为空");
+            return v_RetResp.setCode("-4").setMessage("业务类型为空");
         }
         
         

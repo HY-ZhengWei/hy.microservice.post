@@ -3,9 +3,6 @@ package org.hy.microservice.post.userNice;
 import org.hy.common.xml.annotation.XType;
 import org.hy.common.xml.annotation.Xjava;
 import org.hy.common.xml.annotation.Xsql;
-import org.hy.microservice.post.PostInfo;
-
-import java.util.List;
 
 
 
@@ -32,7 +29,7 @@ public interface IUserNiceLogDAO
      * @param i_UserNiceLog
      * @return
      */
-    @Xsql("XSQL_PingShan_UserNiceLog_Insert")
+    @Xsql("XSQL_UserNiceLog_Insert")
     public int addLog(UserNiceLog i_UserNiceLog);
     
     
@@ -47,22 +44,22 @@ public interface IUserNiceLogDAO
      * @param i_UserNiceLog
      * @return
      */
-    @Xsql("XSQL_PingShan_UserNiceLog_Del")
+    @Xsql("XSQL_UserNiceLog_Del")
     public int delLog(UserNiceLog i_UserNiceLog);
 
     
 
     /**
-     * 查询用户收藏
-     *
-     * @author      Lihao
-     * @createDate  2020-10-7
+     * 查询点赞对象的点赞数量
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-02-07
      * @version     v1.0
      *
      * @param i_UserNiceLog
-     * @return List<PostInfo>
+     * @return
      */
-    @Xsql("XSQL_UserNiceLog_queryList")
-    public List<PostInfo> queryUserNiceLog(UserNiceLog i_UserNiceLog);
+    @Xsql("XSQL_UserNiceLog_Query_NiceCount")
+    public Long queryNiceCount(UserNiceLog i_UserNiceLog);
     
 }

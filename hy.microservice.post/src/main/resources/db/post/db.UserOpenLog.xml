@@ -18,13 +18,19 @@
                 <![CDATA[
                 INSERT  INTO UserOpenLog
                        (
-                        userID    
+                        userID 
+                       ,userName
+                       ,userIcon
+                       ,userType
                        ,openID  
                        ,serviceType 
                        ,createTime
                        )
                 VALUES (
                         ':userID'
+                       ,':userName'
+                       ,':userIcon'
+                       ,':userType'
                        ,':openID'
                        ,':serviceType'
                        ,NOW()

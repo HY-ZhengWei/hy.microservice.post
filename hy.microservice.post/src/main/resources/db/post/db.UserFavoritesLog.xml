@@ -18,13 +18,19 @@
                 <![CDATA[
                 INSERT  INTO UserFavoritesLog
                        (
-                        userID    
+                        userID   
+                       ,userName
+                       ,userIcon
+                       ,userType
                        ,favoritesID  
                        ,serviceType 
                        ,createTime
                        )
                 VALUES (
                         ':userID'
+                       ,':userName'
+                       ,':userIcon'
+                       ,':userType'
                        ,':favoritesID'
                        ,':serviceType'
                        ,NOW()
@@ -51,39 +57,6 @@
             
         </sql>
 
-
-
-        <sql id="XSQL_UserFavoritesLog_queryList">
-
-            <dataSourceGroup ref="DSG_MS_Post" />
-
-            <content>
-                <![CDATA[
-                select
-                        A.id
-                       ,B.createTime
-                       ,A.serviceType
-                       ,A.deviceNo
-                       ,A.deviceType
-                       ,A.userID
-                       ,A.userName
-                       ,A.userIcon
-                       ,A.userType
-                       ,A.postTypeID
-                       ,A.postTypeName
-                       ,A.title
-                       ,A.coverUrl
-                       ,A.content
-                FROM UserFavoritesLog B
-                INNER JOIN PostInfo  A ON B.userID = A.userID
-                WHERE  B.favoritesID = A.id and B.userID   = ':userID'
-                ]]>
-            </content>
-            <result>
-                <row>org.hy.microservice.post.PostInfo</row>
-                <cfill>setter(colValue)</cfill>
-            </result>
-        </sql>
     </sqls>
     
 </config>

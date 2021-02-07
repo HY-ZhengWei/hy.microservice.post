@@ -10,7 +10,7 @@
 
     <sqls>
     
-        <sql id="XSQL_PingShan_UserNiceLog_Insert"> 
+        <sql id="XSQL_UserNiceLog_Insert"> 
         
             <dataSourceGroup ref="DSG_MS_Post" />
             
@@ -18,13 +18,19 @@
                 <![CDATA[
                 INSERT  INTO UserNiceLog
                        (
-                        userID    
+                        userID 
+                       ,userName
+                       ,userIcon
+                       ,userType
                        ,niceID  
                        ,niceType 
                        ,createTime
                        )
                 VALUES (
                         ':userID'
+                       ,':userName'
+                       ,':userIcon'
+                       ,':userType'
                        ,':niceID'
                        ,':niceType'
                        ,NOW()
@@ -36,7 +42,7 @@
         
         
         
-        <sql id="XSQL_PingShan_UserNiceLog_Del"> 
+        <sql id="XSQL_UserNiceLog_Del"> 
         
             <dataSourceGroup ref="DSG_MS_Post" />
             
@@ -48,6 +54,28 @@
                    AND  niceType = ':niceType'
                 ]]>
             </content>
+            
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserNiceLog_Query_NiceCount"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  COUNT(1) AS totalCount 
+                  FROM  UserNiceLog
+                 WHERE  niceID   = ':niceID'
+                   AND  userType = ':userType'
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.userNice.UserNiceLog</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
             
         </sql>
         

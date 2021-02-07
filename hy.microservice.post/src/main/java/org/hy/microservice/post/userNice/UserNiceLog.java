@@ -18,9 +18,6 @@ public class UserNiceLog extends BaseViewMode
     
     private static final long serialVersionUID = -2489682868611553092L;
 
-    /** 用户编号 */
-    private String userID;
-    
     /** 点赞对象的编号 */
     private String niceID;
     
@@ -34,15 +31,6 @@ public class UserNiceLog extends BaseViewMode
     private String deviceType;
     
     
-    
-    /**
-     * 获取：用户编号
-     */
-    public String getUserID()
-    {
-        return userID;
-    }
-
     
     /**
      * 获取：点赞对象的编号
@@ -62,18 +50,6 @@ public class UserNiceLog extends BaseViewMode
     }
 
 
-    
-    /**
-     * 设置：用户编号
-     * 
-     * @param userID 
-     */
-    public void setUserID(String userID)
-    {
-        this.userID = userID;
-    }
-
-    
     /**
      * 设置：点赞对象的编号
      * 

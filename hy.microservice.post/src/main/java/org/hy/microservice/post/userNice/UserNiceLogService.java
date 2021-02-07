@@ -1,12 +1,6 @@
 package org.hy.microservice.post.userNice;
 
 import org.hy.common.xml.annotation.Xjava;
-import org.hy.microservice.post.PostInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 
@@ -21,15 +15,13 @@ import java.util.List;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-@Service("userNiceLogService")
 @Xjava
 public class UserNiceLogService 
 {
-
-    @Autowired
-    @Qualifier("UserNiceLogDAO")
+    
     @Xjava
     public IUserNiceLogDAO userNiceLogDAO;
+    
 
 
     /**
@@ -99,18 +91,18 @@ public class UserNiceLogService
     
 
     /**
-     * 查询点赞帖子
-     *
-     * @author      LiHao
-     * @createDate  2020-11-07
+     * 查询点赞对象的点赞数量
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-02-07
      * @version     v1.0
      *
      * @param i_UserNiceLog
      * @return
      */
-    public List<PostInfo> queryUserNiceLog(UserNiceLog i_UserNiceLog)
+    public Long queryNiceCount(UserNiceLog i_UserNiceLog)
     {
-        return this.userNiceLogDAO.queryUserNiceLog(i_UserNiceLog);
+        return this.userNiceLogDAO.queryNiceCount(i_UserNiceLog);
     }
     
 }

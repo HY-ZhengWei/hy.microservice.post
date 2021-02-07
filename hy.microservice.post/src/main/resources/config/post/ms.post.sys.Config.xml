@@ -29,7 +29,7 @@
             
             <item id="MS_Post_IsCheckToken">
                 <name>MS_Post_IsCheckToken</name>
-                <value>true</value>
+                <value>false</value>
                 <comment>是否验证用户登录的票据</comment>
             </item>
             

@@ -20,6 +20,9 @@
                 CREATE TABLE UserNiceLog
                 (
                  userID        VARCHAR(64)     NOT NULL          COMMENT '用户编号'
+                ,userName      VARCHAR(128)                      COMMENT '用户名称'
+                ,userIcon      VARCHAR(500)                      COMMENT '用户头像路径'
+                ,userType      VARCHAR(64)                       COMMENT '用户类型'
                 ,niceID        VARCHAR(64)     NOT NULL          COMMENT '点赞对象的编号'
                 ,niceType      VARCHAR(64)     NOT NULL          COMMENT '点赞对象的类型'
                 ,createTime    DATETIME        NOT NULL          COMMENT '创建时间'

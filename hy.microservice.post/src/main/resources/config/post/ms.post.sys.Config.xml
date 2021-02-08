@@ -13,6 +13,13 @@
 
         <xparam id="SYSParam_MS_Post" key="name">
             
+            <item id="MS_Post_Analyses_Password">
+                <name>MS_Post_Analyses_Password</name>
+                <value encrypt="org.hy.common.StringHelp">mspost</value>
+                <comment>分析中心的访问密码</comment>
+            </item>
+            
+            
             <item id="IsInitDSG_MS_Post">
                 <name>IsInitDSG_MS_Post</name>
                 <value>启用</value>

@@ -102,7 +102,7 @@ public class UserNiceLogController
             
             if ( !v_User.getUserId().equals(i_UserNiceLog.getUserID()) )
             {
-                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+                return v_RetResp.setCode("-902").setMessage("用户与登录用户不一致");
             }
         }
         
@@ -179,7 +179,7 @@ public class UserNiceLogController
             
             if ( !v_User.getUserId().equals(i_UserNiceLog.getUserID()) )
             {
-                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+                return v_RetResp.setCode("-902").setMessage("用户与登录用户不一致");
             }
         }
         

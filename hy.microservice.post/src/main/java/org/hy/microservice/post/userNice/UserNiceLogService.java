@@ -1,5 +1,7 @@
 package org.hy.microservice.post.userNice;
 
+import java.util.List;
+
 import org.hy.common.xml.annotation.Xjava;
 
 
@@ -103,6 +105,40 @@ public class UserNiceLogService
     public Long queryNiceCount(UserNiceLog i_UserNiceLog)
     {
         return this.userNiceLogDAO.queryNiceCount(i_UserNiceLog);
+    }
+    
+    
+    
+    /**
+     * 查询点赞列表
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-02-08
+     * @version     v1.0
+     *
+     * @param i_UserNiceLog
+     * @return
+     */
+    public List<UserNiceLog> queryNices(UserNiceLog i_UserNiceLog)
+    {
+        return this.userNiceLogDAO.queryNices(i_UserNiceLog);
+    }
+    
+    
+    
+    /**
+     * 点赞列表查询的总行数
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-02-08
+     * @version     v1.0
+     *
+     * @param i_UserNiceLog
+     * @return
+     */
+    public Long queryNicesCount(UserNiceLog i_UserNiceLog)
+    {
+        return this.userNiceLogDAO.queryNicesCount(i_UserNiceLog);
     }
     
 }

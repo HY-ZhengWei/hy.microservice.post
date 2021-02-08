@@ -202,4 +202,44 @@ public class UserNiceLogController
         return v_RetResp.setCode("-999").setMessage("异常");
     }
     
+    
+    
+    /**
+     * 点赞列表查询
+     *
+     * @author      ZhengWei(HY)
+     * @createDate  2021-02-08
+     * @version     v1.0
+     *
+     * @param i_UserNiceLog
+     * @return
+     */
+    @PostMapping(value="list")
+    public BaseResponse<UserNiceLog> queryList(@RequestBody UserNiceLog i_UserNiceLog)
+    {
+        BaseResponse<UserNiceLog> v_RetResp = new BaseResponse<UserNiceLog>();
+        
+        if ( i_UserNiceLog == null )
+        {
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
+        }
+        
+        
+        i_UserNiceLog.setNiceType(i_UserNiceLog.getServiceType());
+        
+        try
+        {
+            v_RetResp.setData(this.userNiceLogService.queryNices(i_UserNiceLog));
+            v_RetResp.getData().setRecordCount(this.userNiceLogService.queryNicesCount(i_UserNiceLog));
+            
+            return v_RetResp;
+        }
+        catch (Exception exce)
+        {
+            $Logger.error(exce);
+        }
+        
+        return v_RetResp.setCode("-999").setMessage("异常");
+    }
+    
 }

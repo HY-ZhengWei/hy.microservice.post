@@ -68,7 +68,65 @@
                 SELECT  COUNT(1) AS totalCount 
                   FROM  UserNiceLog
                  WHERE  niceID   = ':niceID'
-                   AND  userType = ':userType'
+                   AND  niceType = ':niceType'
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.userNice.UserNiceLog</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+            
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserNiceLog_Query"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  userID 
+                       ,userName
+                       ,userIcon
+                       ,userType
+                       ,niceID  
+                       ,niceType 
+                       ,createTime
+                  FROM  UserNiceLog
+                 WHERE  1 = 1
+             <[    AND  niceID   = ':niceID'       ]>
+             <[    AND  userID   = ':userID'       ]>
+             <[    AND  niceType = ':niceType'     ]>
+             ORDER  BY createTime DESC
+             <[  LIMIT :startIndex, :pagePerCount  ]>
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.userNice.UserNiceLog</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+            
+        </sql>
+        
+        
+        
+        <sql id="XSQL_UserNiceLog_Query_Count"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  COUNT(1)  AS totalCount
+                  FROM  UserNiceLog
+                 WHERE  1 = 1
+             <[    AND  niceID   = ':niceID'       ]>
+             <[    AND  userID   = ':userID'       ]>
+             <[    AND  niceType = ':niceType'     ]>
+             ORDER  BY createTime DESC
+             <[  LIMIT :startIndex, :pagePerCount  ]>
                 ]]>
             </content>
             

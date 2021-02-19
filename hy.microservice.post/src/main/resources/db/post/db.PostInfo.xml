@@ -39,7 +39,11 @@
                        ,favoritesCount
                        ,goodCount 
                        ,isRecommend    
-                       ,isShow        
+                       ,isShow  
+                       ,orderBy      
+                       ,relationID
+                       ,relationName
+                       ,expireTime
                        ,createTime
                        ,updateTime    
                        ,auditState    
@@ -69,6 +73,10 @@
                        ,':goodCount'
                        ,':isRecommend'
                        ,':isShow'
+                       ,':orderBy'
+                       ,':relationID'
+                       ,':relationName'
+                       ,':expireTime'
                        ,NOW()
                        ,NOW()
                        ,':auditState'
@@ -138,6 +146,10 @@
                        )  AS  myIsComment
                        ,A.isRecommend        
                        ,A.isShow        
+                       ,A.orderBy
+                       ,A.relationID    
+                       ,A.relationName    
+                       ,A.expireTime    
                        ,A.createTime    
                        ,A.updateTime    
                        ,A.auditState    
@@ -146,6 +158,7 @@
                   FROM  PostInfo  A
                  WHERE  A.auditState  = '1'
                    AND  A.isShow      = 1
+                   AND  A.expireTime >= NOW()
                 <[ AND  A.id          = ':id'           ]>
                 <[ AND  A.userID      = ':userID'       ]>
                 <[ AND  A.postTypeID  = ':postTypeID'   ]>
@@ -178,7 +191,8 @@
                                    AND  WD.serviceType = A.serviceType
                                )
                 ]>
-                 ORDER  BY A.createTime DESC
+                 ORDER  BY A.orderBy    DESC
+                          ,A.createTime DESC
                           ,A.goodCount  DESC
                  <[ LIMIT :startIndex, :pagePerCount    ]>
                 ]]>
@@ -203,6 +217,7 @@
                   FROM  PostInfo  A
                  WHERE  A.auditState  = '1'
                    AND  A.isShow      = 1
+                   AND  A.expireTime >= NOW()
                 <[ AND  A.id          = ':id'           ]>
                 <[ AND  A.userID      = ':userID'       ]>
                 <[ AND  A.postTypeID  = ':postTypeID'   ]>
@@ -400,7 +415,14 @@
                         <[ ,videoUrl      = ':videoUrl'     ]>
                         <[ ,videoUrlID    = ':videoUrlID'   ]>
                         <[ ,coverUrl      = ':coverUrl'     ]>
+                        <[ ,coverUrlID    = ':coverUrlID'   ]>
                         <[ ,content       = ':content'      ]>
+                        <[ ,isRecommend   = ':isRecommend'  ]>
+                        <[ ,isShow        = ':isShow'       ]>
+                        <[ ,orderBy       = ':orderBy'      ]>
+                        <[ ,relationID    = ':relationID'   ]>
+                        <[ ,relationName  = ':relationName' ]>
+                           ,auditState    = '0'
                            ,updateTime    = NOW()
                  WHERE  id                = ':id'
                 ]]>

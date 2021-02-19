@@ -46,23 +46,23 @@ public class PostController
     
     @Autowired
     @Qualifier("UserOpenLogService")
-    public UserOpenLogService userOpenLogService;
+    private UserOpenLogService userOpenLogService;
     
     @Autowired
     @Qualifier("UserNiceLogService")
-    public UserNiceLogService userNiceLogService;
+    private UserNiceLogService userNiceLogService;
     
     @Autowired
     @Qualifier("UserFavoritesLogService")
-    public UserFavoritesLogService userFavoritesLogService;
+    private UserFavoritesLogService userFavoritesLogService;
     
     @Autowired
     @Qualifier("UserService")
-    public UserService userService;
+    private UserService userService;
     
     @Autowired
     @Qualifier("MS_Post_IsCheckToken")
-    public Param isCheckToken;
+    private Param isCheckToken;
     
     
     

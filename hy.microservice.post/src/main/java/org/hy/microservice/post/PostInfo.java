@@ -75,6 +75,12 @@ public class PostInfo extends BaseViewMode
     /** 我发帖的数量 */
     private Integer myIsPostCount;
     
+    /** 关联对象的编号 */
+    private String  relationID;
+    
+    /** 关联对象的名称 */
+    private String  relationName;
+    
     
     
     public String getMessageCountInfo()
@@ -478,6 +484,46 @@ public class PostInfo extends BaseViewMode
     public void setCoverUrlID(String coverUrlID)
     {
         this.coverUrlID = coverUrlID;
+    }
+
+    
+    /**
+     * 获取：关联对象的编号
+     */
+    public String getRelationID()
+    {
+        return relationID;
+    }
+
+    
+    /**
+     * 获取：关联对象的名称
+     */
+    public String getRelationName()
+    {
+        return relationName;
+    }
+
+    
+    /**
+     * 设置：关联对象的编号
+     * 
+     * @param relationID 
+     */
+    public void setRelationID(String relationID)
+    {
+        this.relationID = relationID;
+    }
+
+
+    /**
+     * 设置：关联对象的名称
+     * 
+     * @param relationName 
+     */
+    public void setRelationName(String relationName)
+    {
+        this.relationName = relationName;
     }
     
 }

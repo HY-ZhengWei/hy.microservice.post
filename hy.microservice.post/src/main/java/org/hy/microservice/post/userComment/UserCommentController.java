@@ -42,15 +42,15 @@ public class UserCommentController
     
     @Autowired
     @Qualifier("UserNiceLogService")
-    public UserNiceLogService userNiceLogService;
+    private UserNiceLogService userNiceLogService;
     
     @Autowired
     @Qualifier("UserService")
-    public UserService userService;
+    private UserService userService;
     
     @Autowired
     @Qualifier("MS_Post_IsCheckToken")
-    public Param isCheckToken;
+    private Param isCheckToken;
     
     
     

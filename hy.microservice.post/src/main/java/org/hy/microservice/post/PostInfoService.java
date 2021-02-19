@@ -2,6 +2,7 @@ package org.hy.microservice.post;
 
 import java.util.List;
 
+import org.hy.common.Date;
 import org.hy.common.Help;
 import org.hy.common.StringHelp;
 import org.hy.common.xml.annotation.Xjava;
@@ -97,7 +98,9 @@ public class PostInfoService
         io_PostInfo.setGoodCount(0L);
         io_PostInfo.setIsRecommend(0);
         io_PostInfo.setIsShow(1);
+        io_PostInfo.setOrderBy(0);
         io_PostInfo.setAuditState("1");
+        io_PostInfo.setExpireTime(new Date("9999-12-31 23:59:59"));
         
         return this.postInfoDAO.addPost(io_PostInfo) == 1;
     }

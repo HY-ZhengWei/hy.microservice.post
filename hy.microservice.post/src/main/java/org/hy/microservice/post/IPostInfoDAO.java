@@ -6,6 +6,7 @@ import org.hy.common.xml.annotation.XType;
 import org.hy.common.xml.annotation.Xjava;
 import org.hy.common.xml.annotation.Xparam;
 import org.hy.common.xml.annotation.Xsql;
+import org.hy.common.xml.plugins.XSQLGroupResult;
 
 
 
@@ -77,8 +78,8 @@ public interface IPostInfoDAO
      * @param i_PostInfo
      * @return
      */
-    @Xsql("XSQL_PostInfo_Insert")
-    public int addPost(PostInfo i_PostInfo);
+    @Xsql("GXSQL_PostInfo_Add")
+    public XSQLGroupResult addPost(PostInfo i_PostInfo);
     
     
     

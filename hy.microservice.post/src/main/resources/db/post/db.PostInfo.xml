@@ -81,12 +81,29 @@
                        ,NOW()
                        ,':auditState'
                        ,':auditResult'
-                       ,':auditTime'
+                       ,NULL
                        )
                 ]]>
             </content>
             
         </sql>
+        
+        
+        
+        <sqlGroup id="GXSQL_PostInfo_Add">
+            <comment>添加帖子及附加文件</comment>
+        
+            <sqlNode>
+                <sql  ref="XSQL_PostInfo_Insert" />
+                <type ref="this.$Type_ExecuteUpdate" />
+            </sqlNode>
+            
+            <sqlNode>
+                <sql  ref="XSQL_PostFile_Insert" />
+                <type ref="this.$Type_CollectionToExecuteUpdate" />
+                <collectionID>files</collectionID>
+            </sqlNode>
+        </sqlGroup>
         
         
         
@@ -408,23 +425,22 @@
             <content>
                 <![CDATA[
                 UPDATE  PostInfo
-                   SET  id                = ':id'
-                        <[ ,postTypeName  = ':postTypeName' ]>
-                        <[ ,postTypeID    = ':postTypeID'   ]>
-                        <[ ,title         = ':title'        ]>
-                        <[ ,videoUrl      = ':videoUrl'     ]>
-                        <[ ,videoUrlID    = ':videoUrlID'   ]>
-                        <[ ,coverUrl      = ':coverUrl'     ]>
-                        <[ ,coverUrlID    = ':coverUrlID'   ]>
-                        <[ ,content       = ':content'      ]>
-                        <[ ,isRecommend   = ':isRecommend'  ]>
-                        <[ ,isShow        = ':isShow'       ]>
-                        <[ ,orderBy       = ':orderBy'      ]>
-                        <[ ,relationID    = ':relationID'   ]>
-                        <[ ,relationName  = ':relationName' ]>
-                           ,auditState    = '0'
-                           ,updateTime    = NOW()
-                 WHERE  id                = ':id'
+                   SET  auditState   = '0'
+                       ,updateTime   = NOW()
+                    <[ ,postTypeName = ':postTypeName' ]>
+                    <[ ,postTypeID   = ':postTypeID'   ]>
+                    <[ ,title        = ':title'        ]>
+                    <[ ,videoUrl     = ':videoUrl'     ]>
+                    <[ ,videoUrlID   = ':videoUrlID'   ]>
+                    <[ ,coverUrl     = ':coverUrl'     ]>
+                    <[ ,coverUrlID   = ':coverUrlID'   ]>
+                    <[ ,content      = ':content'      ]>
+                    <[ ,isRecommend  = ':isRecommend'  ]>
+                    <[ ,isShow       = ':isShow'       ]>
+                    <[ ,orderBy      = ':orderBy'      ]>
+                    <[ ,relationID   = ':relationID'   ]>
+                    <[ ,relationName = ':relationName' ]>
+                 WHERE  id           = ':id'
                 ]]>
             </content>
 

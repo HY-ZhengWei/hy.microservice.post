@@ -63,6 +63,39 @@
             
         </sql>
         
+        
+        
+        <sql id="XSQL_Create_PostFile">
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                CREATE TABLE PostFile
+                (
+                 id              VARCHAR(64)     NOT NULL          COMMENT '主键'
+                ,serviceType     VARCHAR(64)     NOT NULL          COMMENT '业务类型（值内容由业务决定）'
+                ,postTypeID      VARCHAR(64)     NOT NULL          COMMENT '帖子分类编号'
+                ,postID          VARCHAR(64)     NOT NULL          COMMENT '帖子编号'
+                ,fileUrl         VARCHAR(320)                      COMMENT '帖子附加文件地址'
+                ,fileUrlID       VARCHAR(64)                       COMMENT '帖子附加文件ID'
+                ,isShow          INT             NOT NULL          COMMENT '是否显示。1显示；0不显示'
+                ,orderBy         INT             NOT NULL          COMMENT '排列显示顺序。数据越大越在前显示'
+                ,createTime      DATETIME        NOT NULL          COMMENT '创建时间'
+                ,updateTime      DATETIME        NOT NULL          COMMENT '修改时间'
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;/
+
+                ALTER TABLE PostFile ADD CONSTRAINT PK_PostImage PRIMARY KEY (id);/
+                
+                Alter TABLE PostFile COMMENT                           = '帖子附加文件';/
+                ]]>
+            </content>
+            
+            <comment>帖子附加文件</comment>
+            <create>PostFile</create>
+            
+        </sql>
+        
     </sqls>
     
 </config>

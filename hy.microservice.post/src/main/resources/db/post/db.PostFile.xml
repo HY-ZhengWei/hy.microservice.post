@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <import name="sqls"            class="java.util.ArrayList" />
+    <import name="sqlGroup"        class="org.hy.common.xml.plugins.XSQLGroup" />
+    <import name="sql"             class="org.hy.common.xml.XSQL" />
+
+
+
+    <sqls>
+    
+        <sql id="XSQL_PostFile_Insert"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                INSERT  INTO PostFile
+                       (
+                        id     
+                       ,serviceType
+                       ,postTypeID 
+                       ,postID 
+                       ,fileUrl    
+                       ,fileUrlID  
+                       ,isShow
+                       ,orderBy
+                       ,createTime
+                       ,updateTime    
+                       )
+                VALUES (
+                        ':id'
+                       ,':serviceType'
+                       ,':postTypeID'
+                       ,':postID'
+                       ,':fileUrl'
+                       ,':fileUrlID'
+                       ,':isShow'
+                       ,':orderBy'
+                       ,NOW()
+                       ,NOW()
+                       )
+                ]]>
+            </content>
+            
+        </sql>
+        
+        
+        
+        <sql id="XSQL_PostFile_Query"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  A.id     
+                       ,A.serviceType
+                       ,A.postTypeID 
+                       ,A.postID 
+                       ,A.fileUrl    
+                       ,A.fileUrlID  
+                       ,A.isShow
+                       ,A.orderBy
+                       ,A.createTime
+                       ,A.updateTime 
+                  FROM  PostFile  A
+                 WHERE  A.isShow      = 1
+                <[ AND  A.id          = ':id'           ]>
+                <[ AND  A.serviceType = ':serviceType'  ]>
+                <[ AND  A.postTypeID  = ':postTypeID'   ]>
+                <[ AND  A.postID      = ':postID'       ]>
+                 ORDER  BY A.orderBy    DESC
+                          ,A.createTime DESC
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.PostFile</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+            
+        </sql>
+        
+        
+        
+        <sql id="XSQL_PostFile_Update_ByID">
+
+            <dataSourceGroup ref="DSG_MS_Post" />
+
+            <content>
+                <![CDATA[
+                UPDATE  PostFile
+                   SET  updateTime = NOW()
+                    <[ ,postTypeID = ':postTypeID'   ]>
+                    <[ ,fileUrl    = ':fileUrl'      ]>
+                    <[ ,fileUrlID  = ':fileUrlID'    ]>
+                    <[ ,isShow     = ':isShow'       ]>
+                    <[ ,orderBy    = ':orderBy'      ]>
+                 WHERE  id         = ':id'
+                ]]>
+            </content>
+
+        </sql>
+        
+        
+        
+        <sql id="XSQL_PostFile_Del"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                DELETE  FROM PostFile
+                 WHERE  id = ':id'
+                ]]>
+            </content>
+            
+        </sql>
+
+    </sqls>
+    
+</config>

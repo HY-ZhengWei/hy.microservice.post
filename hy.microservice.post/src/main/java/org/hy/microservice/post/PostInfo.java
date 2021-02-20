@@ -1,5 +1,7 @@
 package org.hy.microservice.post;
 
+import java.util.List;
+
 import org.hy.microservice.common.BaseViewMode;
 
 
@@ -80,6 +82,9 @@ public class PostInfo extends BaseViewMode
     
     /** 关联对象的名称 */
     private String  relationName;
+    
+    /** 附加文件（可以图片、视频、文档等） */
+    private List<PostFile> files;
     
     
     
@@ -524,6 +529,26 @@ public class PostInfo extends BaseViewMode
     public void setRelationName(String relationName)
     {
         this.relationName = relationName;
+    }
+
+    
+    /**
+     * 获取：附加文件（可以图片、视频、文档等）
+     */
+    public List<PostFile> getFiles()
+    {
+        return files;
+    }
+
+    
+    /**
+     * 设置：附加文件（可以图片、视频、文档等）
+     * 
+     * @param files 
+     */
+    public void setFiles(List<PostFile> files)
+    {
+        this.files = files;
     }
     
 }

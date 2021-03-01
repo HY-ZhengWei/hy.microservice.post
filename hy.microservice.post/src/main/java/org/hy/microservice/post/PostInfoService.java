@@ -117,6 +117,7 @@ public class PostInfoService
         io_PostInfo.setIsShow(1);
         io_PostInfo.setOrderBy(0);
         io_PostInfo.setAuditState("1");
+        io_PostInfo.setAuditResult("1");
         io_PostInfo.setExpireTime(new Date("9999-12-31 23:59:59"));
         
         if ( !Help.isNull(io_PostInfo.getFiles()) )

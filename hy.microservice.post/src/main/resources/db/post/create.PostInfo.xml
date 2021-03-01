@@ -79,6 +79,7 @@
                 ,postID          VARCHAR(64)     NOT NULL          COMMENT '帖子编号'
                 ,fileUrl         VARCHAR(320)                      COMMENT '帖子附加文件地址'
                 ,fileUrlID       VARCHAR(64)                       COMMENT '帖子附加文件ID'
+                ,fileType        VARCHAR(20)                       COMMENT '帖子附加文件类型'
                 ,isShow          INT             NOT NULL          COMMENT '是否显示。1显示；0不显示'
                 ,orderBy         INT             NOT NULL          COMMENT '排列显示顺序。数据越大越在前显示'
                 ,createTime      DATETIME        NOT NULL          COMMENT '创建时间'

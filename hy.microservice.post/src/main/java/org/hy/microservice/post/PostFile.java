@@ -32,6 +32,9 @@ public class PostFile extends BaseViewMode
     
     /** 帖子附加文件ID */
     private String fileUrlID;
+    
+    /** 帖子附加文件类型 */
+    private String fileType;
 
     
     
@@ -132,6 +135,26 @@ public class PostFile extends BaseViewMode
     public void setFileUrlID(String fileUrlID)
     {
         this.fileUrlID = fileUrlID;
+    }
+
+    
+    /**
+     * 获取：帖子附加文件类型
+     */
+    public String getFileType()
+    {
+        return fileType;
+    }
+
+    
+    /**
+     * 设置：帖子附加文件类型
+     * 
+     * @param fileType 
+     */
+    public void setFileType(String fileType)
+    {
+        this.fileType = fileType;
     }
     
 }

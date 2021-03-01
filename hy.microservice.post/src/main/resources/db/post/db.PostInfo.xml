@@ -173,7 +173,7 @@
                        ,A.auditResult   
                        ,A.auditTime  
                   FROM  PostInfo  A
-                 WHERE  A.auditState  = '1'
+                 WHERE  A.auditResult = '1'
                    AND  A.isShow      = 1
                    AND  A.expireTime >= NOW()
                 <[ AND  A.id          = ':id'           ]>
@@ -232,7 +232,7 @@
                 <![CDATA[
                 SELECT  COUNT(1)  AS totalCount
                   FROM  PostInfo  A
-                 WHERE  A.auditState  = '1'
+                 WHERE  A.auditResult = '1'
                    AND  A.isShow      = 1
                    AND  A.expireTime >= NOW()
                 <[ AND  A.id          = ':id'           ]>
@@ -426,6 +426,7 @@
                 <![CDATA[
                 UPDATE  PostInfo
                    SET  auditState   = '0'
+                       ,auditResult  = '0'
                        ,updateTime   = NOW()
                     <[ ,postTypeName = ':postTypeName' ]>
                     <[ ,postTypeID   = ':postTypeID'   ]>

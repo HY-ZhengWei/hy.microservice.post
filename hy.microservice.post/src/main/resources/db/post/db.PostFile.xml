@@ -23,7 +23,8 @@
                        ,postTypeID 
                        ,postID 
                        ,fileUrl    
-                       ,fileUrlID  
+                       ,fileUrlID
+                       ,fileType  
                        ,isShow
                        ,orderBy
                        ,createTime
@@ -36,6 +37,7 @@
                        ,':postID'
                        ,':fileUrl'
                        ,':fileUrlID'
+                       ,':fileType'
                        ,':isShow'
                        ,':orderBy'
                        ,NOW()
@@ -60,6 +62,7 @@
                        ,A.postID 
                        ,A.fileUrl    
                        ,A.fileUrlID  
+                       ,A.fileType  
                        ,A.isShow
                        ,A.orderBy
                        ,A.createTime
@@ -95,6 +98,7 @@
                     <[ ,postTypeID = ':postTypeID'   ]>
                     <[ ,fileUrl    = ':fileUrl'      ]>
                     <[ ,fileUrlID  = ':fileUrlID'    ]>
+                    <[ ,fileType   = ':fileType'     ]>
                     <[ ,isShow     = ':isShow'       ]>
                     <[ ,orderBy    = ':orderBy'      ]>
                  WHERE  id         = ':id'

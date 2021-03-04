@@ -289,6 +289,7 @@ public class PostController
             {
                 this.postService.goodCountAdd(i_PostInfo);
                 
+                i_PostInfo.setUserID(null);
                 v_RetResp = this.queryPosts(i_PostInfo);
                 return v_RetResp;
             }
@@ -373,6 +374,7 @@ public class PostController
             {
                 this.postService.goodCountSubtract(i_PostInfo);
                 
+                i_PostInfo.setUserID(null);
                 v_RetResp = this.queryPosts(i_PostInfo);
                 return v_RetResp;
             }
@@ -456,6 +458,8 @@ public class PostController
             if ( this.userFavoritesLogService.addLog(v_Log) )
             {
                 this.postService.favoritesCountAdd(i_PostInfo);
+                
+                i_PostInfo.setUserID(null);
                 v_RetResp = this.queryPosts(i_PostInfo);
                 return v_RetResp;
             }
@@ -540,6 +544,7 @@ public class PostController
             {
                 this.postService.favoritesCountSubtract(i_PostInfo);
                 
+                i_PostInfo.setUserID(null);
                 v_RetResp = this.queryPosts(i_PostInfo);
                 return v_RetResp;
             }
@@ -624,6 +629,7 @@ public class PostController
             {
                 this.postService.openCountAdd(i_PostInfo);
                 
+                i_PostInfo.setUserID(null);
                 v_RetResp = this.queryPosts(i_PostInfo);
                 return v_RetResp;
             }

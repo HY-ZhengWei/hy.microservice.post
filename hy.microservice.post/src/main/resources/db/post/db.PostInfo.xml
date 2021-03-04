@@ -133,7 +133,7 @@
                        ,(
                          SELECT  COUNT(1)
                            FROM  UserOpenLog  SC
-                          WHERE  SC.userID      = ':userID'
+                          WHERE  SC.userID      = ':seePostUserID'
                             AND  SC.openID      = A.id
                             AND  SC.serviceType = A.serviceType
                         )    AS  myIsOpen 
@@ -142,7 +142,7 @@
                        ,(
                          SELECT  COUNT(1)
                            FROM  UserFavoritesLog  SB
-                          WHERE  SB.userID      = ':userID'
+                          WHERE  SB.userID      = ':seePostUserID'
                             AND  SB.favoritesID = A.id
                             AND  SB.serviceType = A.serviceType
                         )    AS  myIsFavorites 
@@ -150,14 +150,14 @@
                        ,(
                          SELECT  COUNT(1)
                            FROM  UserNiceLog  SA
-                          WHERE  SA.userID   = ':userID'
+                          WHERE  SA.userID   = ':seePostUserID'
                             AND  SA.niceID   = A.id
                             AND  SA.niceType = A.serviceType
                         )    AS  myIsNice
                        ,(
                           SELECT  COUNT(1)
                             FROM  UserComment  SD
-                           WHERE  SD.userID      = ':userID'
+                           WHERE  SD.userID      = ':seePostUserID'
                              AND  SD.postID      = A.id
                              AND  SD.serviceType = A.serviceType
                        )  AS  myIsComment

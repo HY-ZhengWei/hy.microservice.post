@@ -44,6 +44,9 @@ public class PostInfo extends BaseViewMode
     /** 帖子封面图片的文件ID */
     private String  coverUrlID;
     
+    /** 查看帖子的用户ID */
+    private String  seePostUserID;
+    
     /** 帖子内容 */
     private String  content;
     
@@ -549,6 +552,26 @@ public class PostInfo extends BaseViewMode
     public void setFiles(List<PostFile> files)
     {
         this.files = files;
+    }
+
+    
+    /**
+     * 获取：查看帖子的用户ID
+     */
+    public String getSeePostUserID()
+    {
+        return seePostUserID;
+    }
+
+
+    /**
+     * 设置：查看帖子的用户ID
+     * 
+     * @param seePostUserID 
+     */
+    public void setSeePostUserID(String seePostUserID)
+    {
+        this.seePostUserID = seePostUserID;
     }
     
 }

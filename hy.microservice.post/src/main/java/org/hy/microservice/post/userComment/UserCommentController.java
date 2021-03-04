@@ -4,6 +4,8 @@ import org.hy.common.Help;
 import org.hy.common.app.Param;
 import org.hy.common.xml.log.Logger;
 import org.hy.microservice.common.BaseResponse;
+import org.hy.microservice.post.PostInfo;
+import org.hy.microservice.post.PostInfoService;
 import org.hy.microservice.post.user.UserSSO;
 import org.hy.microservice.post.user.UserService;
 import org.hy.microservice.post.userNice.UserNiceLog;
@@ -43,6 +45,10 @@ public class UserCommentController
     @Autowired
     @Qualifier("UserNiceLogService")
     private UserNiceLogService userNiceLogService;
+    
+    @Autowired
+    @Qualifier("PostInfoService")
+    private PostInfoService postService;
     
     @Autowired
     @Qualifier("UserService")
@@ -115,6 +121,11 @@ public class UserCommentController
         boolean v_AddRet = this.commentService.addComment(i_UserComment);
         if ( v_AddRet )
         {
+            PostInfo v_Post = new PostInfo();
+            v_Post.setId(i_UserComment.getPostID());
+            
+            postService.messageCountAdd(v_Post);
+            
             $Logger.info("用户（" + i_UserComment.getUserName() + i_UserComment.getUserID() + "）评论：" + i_UserComment.getComment() + "，成功");
             return this.queryComments(i_UserComment);
         }

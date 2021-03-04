@@ -222,6 +222,7 @@ public class UserCommentController
             {
                 this.commentService.goodCountAdd(i_UserComment);
                 
+                i_UserComment.setUserID(null);
                 v_RetResp = this.queryComments(i_UserComment);
                 return v_RetResp;
             }
@@ -306,6 +307,7 @@ public class UserCommentController
             {
                 this.commentService.goodCountSubtract(i_UserComment);
                 
+                i_UserComment.setUserID(null);
                 v_RetResp = this.queryComments(i_UserComment);
                 return v_RetResp;
             }

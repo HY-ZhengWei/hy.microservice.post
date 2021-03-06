@@ -96,6 +96,23 @@ public class PostInfoService
     
     
     /**
+     * 针对某一业务类型，查询的统计数据。如，我的点赞数、评论数量、收藏数量、发帖数量等
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-03-06
+     * @version     v1.0
+     *
+     * @param i_ServiceType
+     * @return
+     */
+    public PostInfo queryServiceTypeCount(String i_ServiceType)
+    {
+        return this.postInfoDAO.queryServiceTypeCount(i_ServiceType);
+    }
+    
+    
+    
+    /**
      * 添加发帖子
      * 
      * @author      ZhengWei(HY)

@@ -207,12 +207,61 @@ public class PostController
             
             if ( !v_User.getUserId().equals(i_PostInfo.getUserID()) )
             {
-                return v_RetResp.setCode("-902").setMessage("发贴用户与登录用户不一致");
+                return v_RetResp.setCode("-902").setMessage("查询用户与登录用户不一致");
             }
         }
         
         
         v_RetResp.setData(this.postService.queryMyCount(i_PostInfo.getUserID()));
+
+        return v_RetResp;
+    }
+    
+    
+    
+    /**
+     * 获取业务类型的统计信息（点赞量、发帖量、收藏量、评论量）
+     *
+     * @author      ZhengWei(HY)
+     * @createDate  2021-03-06
+     * @version     v1.0
+     *
+     * @param i_PostInfo
+     * @return
+     */
+    @RequestMapping(value="serviceTypeCount" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public BaseResponse<PostInfo> queryServiceTypeCount(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
+    {
+        BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
+        
+        if ( i_PostInfo == null )
+        {
+            return v_RetResp.setCode("-1").setMessage("未收到任何参数");
+        }
+        
+        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
+        {
+            return v_RetResp.setCode("-2").setMessage("业务类型为空");
+        }
+        
+        if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
+        {
+            // 验证票据及用户登录状态
+            if ( Help.isNull(i_Token) ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+            
+            UserSSO v_User = this.userService.getUser(i_Token);
+            if ( v_User == null ) 
+            {
+                return v_RetResp.setCode("-901").setMessage("非法访问");
+            }
+        }
+        
+        
+        v_RetResp.setData(this.postService.queryServiceTypeCount(i_PostInfo.getServiceType()));
 
         return v_RetResp;
     }

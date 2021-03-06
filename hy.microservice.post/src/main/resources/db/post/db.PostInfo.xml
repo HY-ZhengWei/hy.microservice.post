@@ -322,6 +322,49 @@
         
         
         
+        <sql id="XSQL_PostInfo_Query_ServiceTypeCount"> 
+        
+            <dataSourceGroup ref="DSG_MS_Post" />
+            
+            <content>
+                <![CDATA[
+                SELECT  (
+                         SELECT  COUNT(1)
+                           FROM  PostInfo          SE
+                          WHERE  SE.serviceType = ':serviceType'
+                        )    AS  myIsPostCount
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserComment       SD
+                          WHERE  SD.serviceType = ':serviceType'
+                        )    AS  myIsComment
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserOpenLog       SC
+                          WHERE  SC.serviceType = ':serviceType'
+                        )    AS  myIsOpen 
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserFavoritesLog  SB
+                          WHERE  SB.serviceType = ':serviceType'
+                        )    AS  myIsFavorites 
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserNiceLog       SA
+                          WHERE  SA.niceType = ':serviceType'
+                        )    AS  myIsNice
+                ]]>
+            </content>
+            
+            <result>
+                <row>org.hy.microservice.post.PostInfo</row>
+                <cfill>setter(colValue)</cfill>
+            </result>
+            
+        </sql>
+        
+        
+        
         <sql id="XSQL_PostInfo_Update_GoodCount_Add"> 
         
             <dataSourceGroup ref="DSG_MS_Post" />

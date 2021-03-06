@@ -65,6 +65,21 @@ public interface IPostInfoDAO
      */
     @Xsql(id="XSQL_PostInfo_Query_MyCount" ,returnOne=true)
     public PostInfo queryMyCount(@Xparam("userID") String i_UserID);
+    
+    
+    
+    /**
+     * 针对某一业务类型，查询的统计数据。如，我的点赞数、评论数量、收藏数量、发帖数量等
+     * 
+     * @author      ZhengWei(HY)
+     * @createDate  2021-03-06
+     * @version     v1.0
+     *
+     * @param i_ServiceType
+     * @return
+     */
+    @Xsql(id="XSQL_PostInfo_Query_ServiceTypeCount" ,returnOne=true)
+    public PostInfo queryServiceTypeCount(@Xparam("serviceType") String i_ServiceType);
 
     
 

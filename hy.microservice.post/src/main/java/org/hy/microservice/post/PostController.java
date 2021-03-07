@@ -1,5 +1,8 @@
 package org.hy.microservice.post;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hy.common.Help;
 import org.hy.common.app.Param;
 import org.hy.common.xml.log.Logger;
@@ -221,28 +224,25 @@ public class PostController
     
     /**
      * 获取业务类型的统计信息（点赞量、发帖量、收藏量、评论量）
+     * 
+     * 支持批量查询多个业务类型的统计信息
      *
      * @author      ZhengWei(HY)
      * @createDate  2021-03-06
      * @version     v1.0
      *
-     * @param i_PostInfo
+     * @param i_PostInfos
      * @return
      */
     @RequestMapping(value="serviceTypeCount" ,method={RequestMethod.POST} ,produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public BaseResponse<PostInfo> queryServiceTypeCount(@RequestParam("token") String i_Token ,@RequestBody PostInfo i_PostInfo)
+    public BaseResponse<PostInfo> queryServiceTypeCount(@RequestParam("token") String i_Token ,@RequestBody List<PostInfo> i_PostInfos)
     {
         BaseResponse<PostInfo> v_RetResp = new BaseResponse<PostInfo>();
         
-        if ( i_PostInfo == null )
+        if ( Help.isNull(i_PostInfos) )
         {
             return v_RetResp.setCode("-1").setMessage("未收到任何参数");
-        }
-        
-        if ( Help.isNull(i_PostInfo.getServiceType()) ) 
-        {
-            return v_RetResp.setCode("-2").setMessage("业务类型为空");
         }
         
         if ( isCheckToken != null && Boolean.parseBoolean(isCheckToken.getValue()) )
@@ -260,9 +260,20 @@ public class PostController
             }
         }
         
+        v_RetResp.setData(new ArrayList<PostInfo>());
+        for (PostInfo v_Post : i_PostInfos)
+        {
+            if ( v_Post == null || Help.isNull(v_Post.getServiceType()) ) 
+            {
+                return v_RetResp.setCode("-2").setMessage("业务类型为空");
+            }
+            
+            PostInfo v_RetPost = this.postService.queryServiceTypeCount(v_Post.getServiceType());
+            v_RetPost.setServiceType(v_Post.getServiceType());
+            
+            v_RetResp.getData().getDatas().add(v_RetPost);
+        }
         
-        v_RetResp.setData(this.postService.queryServiceTypeCount(i_PostInfo.getServiceType()));
-
         return v_RetResp;
     }
     

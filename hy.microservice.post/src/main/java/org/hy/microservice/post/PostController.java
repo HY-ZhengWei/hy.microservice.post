@@ -342,6 +342,9 @@ public class PostController
         v_Log.setNiceID(  i_PostInfo.getId());
         v_Log.setNiceType(i_PostInfo.getServiceType());
         v_Log.setUserID(  i_PostInfo.getUserID());
+        v_Log.setUserName(i_PostInfo.getUserName());
+        v_Log.setUserIcon(i_PostInfo.getUserIcon());
+        v_Log.setUserType(i_PostInfo.getUserType());
         
         try
         {

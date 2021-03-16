@@ -226,6 +226,9 @@ public class UserCommentController
         v_Log.setNiceID(  i_UserComment.getId());
         v_Log.setNiceType(i_UserComment.getServiceType());
         v_Log.setUserID(  i_UserComment.getUserID());
+        v_Log.setUserName(i_UserComment.getUserName());
+        v_Log.setUserIcon(i_UserComment.getUserIcon());
+        v_Log.setUserType(i_UserComment.getUserType());
         
         try
         {

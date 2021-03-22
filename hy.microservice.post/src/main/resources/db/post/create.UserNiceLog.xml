@@ -26,7 +26,7 @@
                 ,niceID        VARCHAR(64)     NOT NULL          COMMENT '点赞对象的编号'
                 ,niceType      VARCHAR(64)     NOT NULL          COMMENT '点赞对象的类型'
                 ,createTime    DATETIME        NOT NULL          COMMENT '创建时间'
-                );/
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;/
 
                 ALTER TABLE UserNiceLog ADD CONSTRAINT PK_UserNiceLog PRIMARY KEY (userID ,niceID ,niceType);/
                 

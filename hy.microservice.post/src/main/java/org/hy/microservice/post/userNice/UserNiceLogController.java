@@ -1,5 +1,7 @@
 package org.hy.microservice.post.userNice;
 
+import java.util.List;
+
 import org.hy.common.Help;
 import org.hy.common.app.Param;
 import org.hy.common.xml.log.Logger;
@@ -113,8 +115,14 @@ public class UserNiceLogController
         {
             if ( this.userNiceLogService.goodCountAdd(i_UserNiceLog) )
             {
-                i_UserNiceLog.setTotalCount(this.userNiceLogService.queryNiceCount(i_UserNiceLog));
-                return v_RetResp.setData(i_UserNiceLog);
+                i_UserNiceLog.setSeeUserID(i_UserNiceLog.getUserID());
+                i_UserNiceLog.setUserID(null);
+                List<UserNiceLog> v_NiceLogs = this.userNiceLogService.queryNices(i_UserNiceLog);
+                
+                if ( !Help.isNull(v_NiceLogs) )
+                {
+                    return v_RetResp.setData(v_NiceLogs.get(0));
+                }
             }
         }
         catch (Exception exce)
@@ -190,8 +198,20 @@ public class UserNiceLogController
         {
             if ( this.userNiceLogService.goodCountSubtract(i_UserNiceLog) )
             {
-                i_UserNiceLog.setTotalCount(this.userNiceLogService.queryNiceCount(i_UserNiceLog));
-                return v_RetResp.setData(i_UserNiceLog);
+                i_UserNiceLog.setSeeUserID(i_UserNiceLog.getUserID());
+                i_UserNiceLog.setUserID(null);
+                List<UserNiceLog> v_NiceLogs = this.userNiceLogService.queryNices(i_UserNiceLog);
+                
+                if ( !Help.isNull(v_NiceLogs) )
+                {
+                    return v_RetResp.setData(v_NiceLogs.get(0));
+                }
+                else
+                {
+                    i_UserNiceLog.setNiceCount(0L);
+                    i_UserNiceLog.setMyIsNice(0L);
+                    return v_RetResp.setData(i_UserNiceLog);
+                }
             }
         }
         catch (Exception exce)

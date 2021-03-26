@@ -30,6 +30,15 @@ public class UserNiceLog extends BaseViewMode
     /** 设备类型 */
     private String deviceType;
     
+    /** 点赞次数 */
+    private Long   niceCount;
+    
+    /** 我是否点赞过 */
+    private Long   myIsNice;
+    
+    /** 查看点赞的用户ID */
+    private String seeUserID; 
+    
     
     
     /**
@@ -112,4 +121,71 @@ public class UserNiceLog extends BaseViewMode
     {
         this.deviceType = deviceType;
     }
+
+
+    
+    /**
+     * 获取：点赞次数
+     */
+    public Long getNiceCount()
+    {
+        return niceCount;
+    }
+
+
+    
+    /**
+     * 获取：我是否点赞过
+     */
+    public Long getMyIsNice()
+    {
+        return myIsNice;
+    }
+
+
+    
+    /**
+     * 设置：点赞次数
+     * 
+     * @param niceCount 
+     */
+    public void setNiceCount(Long niceCount)
+    {
+        this.niceCount = niceCount;
+    }
+
+
+    
+    /**
+     * 设置：我是否点赞过
+     * 
+     * @param myIsNice 
+     */
+    public void setMyIsNice(Long myIsNice)
+    {
+        this.myIsNice = myIsNice;
+    }
+
+
+    
+    /**
+     * 获取：查看点赞的用户ID
+     */
+    public String getSeeUserID()
+    {
+        return seeUserID;
+    }
+
+
+    
+    /**
+     * 设置：查看点赞的用户ID
+     * 
+     * @param seeUserID 
+     */
+    public void setSeeUserID(String seeUserID)
+    {
+        this.seeUserID = seeUserID;
+    }
+    
 }

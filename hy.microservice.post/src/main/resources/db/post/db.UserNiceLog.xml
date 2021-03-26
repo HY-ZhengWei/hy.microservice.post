@@ -94,10 +94,23 @@
                        ,niceID  
                        ,niceType 
                        ,createTime
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserNiceLog  SA
+                          WHERE  SA.niceID   = ':niceID'
+                            AND  SA.niceType = ':niceType'
+                        )    AS  niceCount  
+                       ,(
+                         SELECT  COUNT(1)
+                           FROM  UserNiceLog  SA
+                          WHERE  SA.userID   = ':seeUserID'
+                            AND  SA.niceID   = ':niceID'
+                            AND  SA.niceType = ':niceType'
+                        )    AS  myIsNice
                   FROM  UserNiceLog
                  WHERE  1 = 1
-             <[    AND  niceID   = ':niceID'       ]>
              <[    AND  userID   = ':userID'       ]>
+             <[    AND  niceID   = ':niceID'       ]>
              <[    AND  niceType = ':niceType'     ]>
              ORDER  BY createTime DESC
              <[  LIMIT :startIndex, :pagePerCount  ]>

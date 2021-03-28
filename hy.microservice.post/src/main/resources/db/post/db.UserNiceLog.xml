@@ -87,27 +87,27 @@
             
             <content>
                 <![CDATA[
-                SELECT  userID 
-                       ,userName
-                       ,userIcon
-                       ,userType
-                       ,niceID  
-                       ,niceType 
-                       ,createTime
+                SELECT  A.userID 
+                       ,A.userName
+                       ,A.userIcon
+                       ,A.userType
+                       ,A.niceID  
+                       ,A.niceType 
+                       ,A.createTime
                        ,(
                          SELECT  COUNT(1)
                            FROM  UserNiceLog  SA
-                          WHERE  SA.niceID   = ':niceID'
-                            AND  SA.niceType = ':niceType'
+                          WHERE  SA.niceID   = A.niceID
+                            AND  SA.niceType = A.niceType
                         )    AS  niceCount  
                        ,(
                          SELECT  COUNT(1)
                            FROM  UserNiceLog  SA
                           WHERE  SA.userID   = ':seeUserID'
-                            AND  SA.niceID   = ':niceID'
-                            AND  SA.niceType = ':niceType'
+                            AND  SA.niceID   = A.niceID
+                            AND  SA.niceType = A.niceType
                         )    AS  myIsNice
-                  FROM  UserNiceLog
+                  FROM  UserNiceLog  A
                  WHERE  1 = 1
              <[    AND  userID   = ':userID'       ]>
              <[    AND  niceID   = ':niceID'       ]>

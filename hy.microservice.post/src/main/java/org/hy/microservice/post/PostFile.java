@@ -35,6 +35,12 @@ public class PostFile extends BaseViewMode
     
     /** 帖子附加文件类型 */
     private String fileType;
+    
+    /** 帖子附加图片时的宽度 */
+    private String imageWidth;
+    
+    /** 帖子附加图片时的高度 */
+    private String imageHeight;
 
     
     
@@ -155,6 +161,46 @@ public class PostFile extends BaseViewMode
     public void setFileType(String fileType)
     {
         this.fileType = fileType;
+    }
+
+
+    /**
+     * 获取：帖子附加图片时的宽度
+     */
+    public String getImageWidth()
+    {
+        return imageWidth;
+    }
+
+
+    /**
+     * 设置：帖子附加图片时的宽度
+     * 
+     * @param fileType 
+     */
+    public void setImageWidth(String imageWidth)
+    {
+        this.imageWidth = imageWidth;
+    }
+
+    
+    /**
+     * 获取：帖子附加图片时的高度
+     */
+    public String getImageHeight()
+    {
+        return imageHeight;
+    }
+
+    
+    /**
+     * 设置：帖子附加图片时的高度
+     * 
+     * @param fileType 
+     */
+    public void setImageHeight(String imageHeight)
+    {
+        this.imageHeight = imageHeight;
     }
     
 }

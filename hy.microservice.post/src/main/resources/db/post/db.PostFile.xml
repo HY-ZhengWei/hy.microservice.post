@@ -24,7 +24,7 @@
                        ,postID 
                        ,fileUrl    
                        ,fileUrlID
-                       ,fileType  
+                       ,fileType
                        ,isShow
                        ,orderBy
                        ,createTime
@@ -63,11 +63,13 @@
                        ,A.fileUrl    
                        ,A.fileUrlID  
                        ,A.fileType  
+                       ,B.width        AS imageWidth  
+                       ,B.height       AS imageHeight  
                        ,A.isShow
                        ,A.orderBy
                        ,A.createTime
                        ,A.updateTime 
-                  FROM  PostFile  A
+                  FROM  PostFile  A  LEFT JOIN FileInfo B ON A.fileUrlID = B.id
                  WHERE  A.isShow      = 1
                 <[ AND  A.id          = ':id'           ]>
                 <[ AND  A.serviceType = ':serviceType'  ]>
@@ -94,14 +96,16 @@
             <content>
                 <![CDATA[
                 UPDATE  PostFile
-                   SET  updateTime = NOW()
-                    <[ ,postTypeID = ':postTypeID'   ]>
-                    <[ ,fileUrl    = ':fileUrl'      ]>
-                    <[ ,fileUrlID  = ':fileUrlID'    ]>
-                    <[ ,fileType   = ':fileType'     ]>
-                    <[ ,isShow     = ':isShow'       ]>
-                    <[ ,orderBy    = ':orderBy'      ]>
-                 WHERE  id         = ':id'
+                   SET  updateTime  = NOW()
+                    <[ ,postTypeID  = ':postTypeID'   ]>
+                    <[ ,fileUrl     = ':fileUrl'      ]>
+                    <[ ,fileUrlID   = ':fileUrlID'    ]>
+                    <[ ,fileType    = ':fileType'     ]>
+                    <[ ,imageWidth  = ':imageWidth'   ]>
+                    <[ ,imageHeight = ':imageHeight'  ]>
+                    <[ ,isShow      = ':isShow'       ]>
+                    <[ ,orderBy     = ':orderBy'      ]>
+                 WHERE  id          = ':id'
                 ]]>
             </content>
 

@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.2</version>
+        <version>2.6.1</version>
     </parent>
 
     <dependencies>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.base</artifactId>
-            <version>1.0.157</version>
+            <version>1.0.160</version>
         </dependency>
         
         <!-- https://github.com/HY-ZhengWei/hy.common.file -->
@@ -128,30 +128,30 @@
         </dependency>
         
         <!-- https://github.com/HY-ZhengWei/hy.common.net -->
+        <!-- https://gitee.com/HY-ZhengWei/hy.common.net -->
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.net</artifactId>
-            <version>2.0.0</version>
+            <version>3.0.1</version>
         </dependency>
         
         <!-- https://github.com/HY-ZhengWei/hy.common.license -->
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.license</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
         
         <!-- https://github.com/HY-ZhengWei/hy.common.xjava -->
         <dependency>
             <groupId>org</groupId>
             <artifactId>hy.common.xjava</artifactId>
-            <version>4.1.2</version>
+            <version>4.1.5</version>
         </dependency>
         
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
       

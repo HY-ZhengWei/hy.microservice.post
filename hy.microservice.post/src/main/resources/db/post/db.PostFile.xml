@@ -101,8 +101,6 @@
                     <[ ,fileUrl     = ':fileUrl'      ]>
                     <[ ,fileUrlID   = ':fileUrlID'    ]>
                     <[ ,fileType    = ':fileType'     ]>
-                    <[ ,imageWidth  = ':imageWidth'   ]>
-                    <[ ,imageHeight = ':imageHeight'  ]>
                     <[ ,isShow      = ':isShow'       ]>
                     <[ ,orderBy     = ':orderBy'      ]>
                  WHERE  id          = ':id'
